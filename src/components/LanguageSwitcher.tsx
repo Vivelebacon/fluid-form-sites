@@ -1,10 +1,11 @@
+import { forwardRef } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = forwardRef<HTMLDivElement>((_, ref) => {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex items-center gap-1 text-sm font-medium">
+    <div ref={ref} className="flex items-center gap-1 text-sm font-medium">
       <button
         onClick={() => setLanguage("en")}
         className={`px-2 py-1 rounded transition-colors ${
@@ -30,6 +31,8 @@ const LanguageSwitcher = () => {
       </button>
     </div>
   );
-};
+});
+
+LanguageSwitcher.displayName = "LanguageSwitcher";
 
 export default LanguageSwitcher;
