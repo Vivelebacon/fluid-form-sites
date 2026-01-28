@@ -56,7 +56,7 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.5, duration: 0.6 }}
           >
-            <a href="mailto:hello@hugomegardon.com">
+            <a href="mailto:hugo.megardon@megaaisolutions.com">
               <Button
                 size="lg"
                 className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-7 text-xl font-medium rounded-full transition-all duration-300 hover:shadow-[0_0_40px_hsl(185,55%,45%,0.4)] animate-pulse-glow"
