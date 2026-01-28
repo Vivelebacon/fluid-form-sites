@@ -81,7 +81,7 @@ const AboutSection = () => {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
             <span className="text-primary font-medium text-sm tracking-wide uppercase">About</span>
-            <h2 className={`text-4xl md:text-5xl font-bold mt-2 mb-6 animated-underline ${isInView ? 'in-view' : ''}`}>What I Do</h2>
+            <h2 className={`text-4xl md:text-5xl font-bold mt-4 mb-6 animated-underline ${isInView ? 'in-view' : ''}`}>What I Do</h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               I specialize in creating digital experiences that combine aesthetic excellence 
               with strategic functionality. Every project is approached with precision and a 

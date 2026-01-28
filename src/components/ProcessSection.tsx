@@ -49,7 +49,7 @@ const ProcessSection = () => {
           <span className="text-primary font-medium text-sm tracking-wide uppercase">
             Workflow
           </span>
-          <h2 className={`text-4xl md:text-5xl font-bold mt-2 animated-underline ${isInView ? 'in-view' : ''}`}>My Process</h2>
+          <h2 className={`text-4xl md:text-5xl font-bold mt-4 animated-underline ${isInView ? 'in-view' : ''}`}>My Process</h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
             A structured approach to ensure every project is delivered with excellence.
           </p>
