@@ -34,7 +34,7 @@ const PortfolioSection = () => {
           <span className="text-primary font-medium text-sm tracking-wide uppercase">
             Portfolio
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-2">Selected Work</h2>
+          <h2 className={`text-4xl md:text-5xl font-bold mt-2 animated-underline ${isInView ? 'in-view' : ''}`}>Selected Work</h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
             Showcasing projects that demonstrate quality, creativity, and attention to detail.
           </p>
@@ -44,13 +44,13 @@ const PortfolioSection = () => {
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2, duration: 0.7 }}
+              initial={{ opacity: 0, y: 50, scale: 0.95 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
               className="group relative"
             >
               {/* Main card */}
-              <div className="relative glass-card rounded-2xl overflow-hidden portfolio-shine hover-lift">
+              <div className="relative glass-card rounded-2xl overflow-hidden portfolio-shine hover-lift card-shine">
                 {/* Gradient top accent */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
 

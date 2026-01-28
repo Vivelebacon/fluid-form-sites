@@ -13,39 +13,14 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden animated-gradient">
-      {/* Animated gradient orbs */}
+      {/* Enhanced parallax gradient orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/10 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[100px]"
           animate={{
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-primary/5 blur-3xl"
-          animate={{
-            x: [0, -40, 0],
-            y: [0, -50, 0],
+            x: [0, 80, 0],
+            y: [0, 50, 0],
             scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 right-1/3 w-64 h-64 rounded-full bg-primary/8 blur-3xl"
-          animate={{
-            x: [0, 30, 0],
-            y: [0, -30, 0],
           }}
           transition={{
             duration: 12,
@@ -53,10 +28,53 @@ const HeroSection = () => {
             ease: "easeInOut",
           }}
         />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-primary/5 blur-[80px]"
+          animate={{
+            x: [0, -60, 0],
+            y: [0, -80, 0],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 right-1/3 w-[300px] h-[300px] rounded-full bg-primary/8 blur-[60px]"
+          animate={{
+            x: [0, 40, 0],
+            y: [0, -40, 0],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        {/* Additional subtle orb */}
+        <motion.div
+          className="absolute bottom-1/3 left-1/3 w-[250px] h-[250px] rounded-full bg-primary/6 blur-[70px]"
+          animate={{
+            x: [0, -30, 0],
+            y: [0, 40, 0],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
       </div>
 
-      {/* Grid overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]" />
+      {/* Grid overlay with parallax */}
+      <motion.div 
+        className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]"
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <div className="relative z-10 section-container text-center">
         <motion.div
@@ -103,7 +121,7 @@ const HeroSection = () => {
             <Button
               size="lg"
               onClick={scrollToWork}
-              className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:shadow-[0_0_30px_hsl(185,55%,45%,0.4)]"
+              className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-medium rounded-full transition-all duration-300 btn-glow"
             >
               <span className="relative z-10">View my work</span>
             </Button>

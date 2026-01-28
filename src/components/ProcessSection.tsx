@@ -49,7 +49,7 @@ const ProcessSection = () => {
           <span className="text-primary font-medium text-sm tracking-wide uppercase">
             Workflow
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-2">My Process</h2>
+          <h2 className={`text-4xl md:text-5xl font-bold mt-2 animated-underline ${isInView ? 'in-view' : ''}`}>My Process</h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
             A structured approach to ensure every project is delivered with excellence.
           </p>
@@ -62,9 +62,9 @@ const ProcessSection = () => {
           {steps.map((step, index) => (
             <motion.div
               key={step.number}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.15, duration: 0.6 }}
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
               className="relative group"
             >
               {/* Step card */}

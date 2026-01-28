@@ -45,26 +45,32 @@ const AboutSection = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left - Image */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, x: -50, scale: 0.95 }}
+            animate={isInView ? { opacity: 1, x: 0, scale: 1 } : {}}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative"
+            className="relative flex justify-center lg:justify-start"
           >
-            <div className="relative aspect-[4/5] max-w-md mx-auto lg:mx-0">
-              {/* Decorative frame */}
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 rounded-2xl" />
-              <div className="absolute -inset-1 bg-gradient-to-br from-primary/30 to-transparent rounded-xl" />
+            <div className="relative w-72 md:w-80 lg:w-96">
+              {/* Animated glow behind image */}
+              <motion.div 
+                className="absolute -inset-4 bg-gradient-to-br from-primary/30 via-primary/10 to-transparent rounded-3xl blur-xl"
+                animate={{ 
+                  opacity: [0.5, 0.8, 0.5],
+                  scale: [1, 1.02, 1] 
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
               
-              <div className="relative overflow-hidden rounded-xl">
+              {/* Profile image container */}
+              <div className="profile-container aspect-square">
                 <img
                   src={hugoProfile}
                   alt="Hugo Megardon - Freelance Web Designer"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center"
                 />
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+                {/* Subtle overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
               </div>
-
             </div>
           </motion.div>
 
@@ -75,7 +81,7 @@ const AboutSection = () => {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
             <span className="text-primary font-medium text-sm tracking-wide uppercase">About</span>
-            <h2 className="text-4xl md:text-5xl font-bold mt-2 mb-6">What I Do</h2>
+            <h2 className={`text-4xl md:text-5xl font-bold mt-2 mb-6 animated-underline ${isInView ? 'in-view' : ''}`}>What I Do</h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               I specialize in creating digital experiences that combine aesthetic excellence 
               with strategic functionality. Every project is approached with precision and a 
