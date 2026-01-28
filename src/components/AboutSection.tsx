@@ -65,16 +65,6 @@ const AboutSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
               </div>
 
-              {/* Floating badge */}
-              <motion.div
-                className="absolute -bottom-6 -right-6 glass-card px-6 py-4 rounded-xl"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.5, duration: 0.5 }}
-              >
-                <p className="text-sm text-muted-foreground">Years of Experience</p>
-                <p className="text-3xl font-bold gradient-text">5+</p>
-              </motion.div>
             </div>
           </motion.div>
 
