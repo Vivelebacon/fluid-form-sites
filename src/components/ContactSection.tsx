@@ -35,7 +35,7 @@ const ContactSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animated-underline ${isInView ? 'in-view' : ''}`}
           >
             Interested in working
             <br />
@@ -59,7 +59,7 @@ const ContactSection = () => {
             <a href="mailto:hugo.megardon@megaaisolutions.com">
               <Button
                 size="lg"
-                className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-7 text-xl font-medium rounded-full transition-all duration-300 hover:shadow-[0_0_40px_hsl(185,55%,45%,0.4)] animate-pulse-glow"
+                className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-7 text-xl font-medium rounded-full transition-all duration-300 btn-glow"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   Get in touch
