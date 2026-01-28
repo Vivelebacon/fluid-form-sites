@@ -200,6 +200,28 @@
     width: 100%;
   }
 
+  /* Animated underline for contact section - positioned lower */
+  .animated-underline-contact {
+    position: relative;
+    display: inline-block;
+  }
+
+  .animated-underline-contact::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, hsl(185, 55%, 45%), hsl(200, 60%, 40%, 0.5));
+    border-radius: 2px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animated-underline-contact.in-view::after {
+    width: 100%;
+  }
+
   /* Button glow hover */
   .btn-glow {
     @apply transition-all duration-300;

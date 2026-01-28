@@ -56,7 +56,7 @@ const SkillsSection = () => {
           <span className="text-primary font-medium text-sm tracking-wide uppercase">
             Expertise
           </span>
-          <h2 className={`text-4xl md:text-5xl font-bold mt-2 animated-underline ${isInView ? 'in-view' : ''}`}>Skills & Tools</h2>
+          <h2 className={`text-4xl md:text-5xl font-bold mt-4 animated-underline ${isInView ? 'in-view' : ''}`}>Skills & Tools</h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
             A combination of creative vision and technical excellence to deliver exceptional results.
           </p>

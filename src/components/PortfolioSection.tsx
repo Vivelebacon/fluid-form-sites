@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { ExternalLink, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import megaAiLogo from "@/assets/mega-ai-logo.png";
 
 const projects = [
   {
@@ -34,7 +35,7 @@ const PortfolioSection = () => {
           <span className="text-primary font-medium text-sm tracking-wide uppercase">
             Portfolio
           </span>
-          <h2 className={`text-4xl md:text-5xl font-bold mt-2 animated-underline ${isInView ? 'in-view' : ''}`}>Selected Work</h2>
+          <h2 className={`text-4xl md:text-5xl font-bold mt-4 animated-underline ${isInView ? 'in-view' : ''}`}>Selected Work</h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
             Showcasing projects that demonstrate quality, creativity, and attention to detail.
           </p>
@@ -55,18 +56,25 @@ const PortfolioSection = () => {
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
 
                 <div className="p-8 md:p-12">
-                  {/* Featured badge */}
-                  {project.featured && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: 0.5, duration: 0.4 }}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
-                    >
-                      <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                      <span className="text-sm font-medium text-primary">Featured Project</span>
-                    </motion.div>
-                  )}
+                  {/* Project logo and featured badge row */}
+                  <div className="flex items-center gap-4 mb-6">
+                    <img 
+                      src={megaAiLogo} 
+                      alt="Mega AI Solutions Logo" 
+                      className="h-10 w-auto rounded-lg opacity-90"
+                    />
+                    {project.featured && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ delay: 0.5, duration: 0.4 }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20"
+                      >
+                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                        <span className="text-sm font-medium text-primary">Featured Project</span>
+                      </motion.div>
+                    )}
+                  </div>
 
                   {/* Project title */}
                   <h3 className="text-3xl md:text-4xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">
