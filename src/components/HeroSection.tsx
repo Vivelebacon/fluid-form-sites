@@ -129,7 +129,7 @@ const HeroSection = () => {
               size="lg"
               variant="outline"
               onClick={scrollToContact}
-              className="px-8 py-6 text-lg font-medium rounded-full border-muted-foreground/30 hover:border-primary hover:text-primary transition-all duration-300 btn-bounce"
+              className="px-8 py-6 text-lg font-medium rounded-full border-muted-foreground/30 hover:border-primary hover:text-primary transition-all duration-300 btn-bounce btn-glow"
             >
               Get in touch
             </Button>
