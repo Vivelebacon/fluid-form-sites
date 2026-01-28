@@ -99,7 +99,7 @@ const AboutSection = () => {
             } : {}} transition={{
               delay: 0.4 + index * 0.1,
               duration: 0.5
-            }} className="group flex items-start gap-4 p-4 rounded-xl hover:bg-muted/50 transition-colors duration-300">
+            }} className="group flex items-start gap-4 p-4 rounded-xl hover:bg-muted/50 transition-colors duration-300 hover-bounce">
                   <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <service.icon className="w-6 h-6 text-primary" />
                   </div>
