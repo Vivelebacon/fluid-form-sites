@@ -129,9 +129,9 @@ const HeroSection = () => {
               size="lg"
               variant="outline"
               onClick={scrollToContact}
-              className="group relative overflow-hidden px-8 py-6 text-lg font-medium rounded-full border-muted-foreground/30 hover:border-primary transition-all duration-300 btn-glow"
+              className="px-8 py-6 text-lg font-medium rounded-full border-muted-foreground/30 hover:border-primary hover:text-primary transition-all duration-300"
             >
-              <span className="relative z-10">Get in touch</span>
+              Get in touch
             </Button>
           </motion.div>
         </motion.div>

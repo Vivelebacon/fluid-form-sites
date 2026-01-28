@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import { Mail, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ContactSection = () => {
@@ -21,6 +21,16 @@ const ContactSection = () => {
           transition={{ duration: 0.7 }}
           className="max-w-3xl mx-auto text-center"
         >
+          {/* Icon */}
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={isInView ? { scale: 1 } : {}}
+            transition={{ delay: 0.2, duration: 0.5, type: "spring" }}
+            className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8"
+          >
+            <Mail className="w-10 h-10 text-primary" />
+          </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -46,7 +56,7 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.5, duration: 0.6 }}
           >
-            <a href="mailto:contact@hugowebdesign.com">
+            <a href="mailto:hugo.megardon@megaaisolutions.com">
               <Button
                 size="lg"
                 className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-7 text-xl font-medium rounded-full transition-all duration-300 btn-glow"
