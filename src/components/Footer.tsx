@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="py-12 border-t border-border/50">
       <div className="section-container">
@@ -14,16 +17,16 @@ const Footer = () => {
           {/* Name */}
           <div className="text-center md:text-left">
             <p className="text-lg font-semibold">
-              Hugo Megardon
+              {t("footer.title")}
             </p>
             <p className="text-sm text-muted-foreground">
-              Freelance Web Designer
+              {t("footer.subtitle")}
             </p>
           </div>
 
           {/* Copyright */}
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} All rights reserved.
+            © {new Date().getFullYear()} {t("footer.copyright")}
           </p>
 
           {/* Navigation */}
@@ -32,19 +35,19 @@ const Footer = () => {
               href="#about"
               className="text-sm text-muted-foreground hover:text-primary transition-colors link-underline"
             >
-              About
+              {t("footer.about")}
             </a>
             <a
               href="#portfolio"
               className="text-sm text-muted-foreground hover:text-primary transition-colors link-underline"
             >
-              Work
+              {t("footer.work")}
             </a>
             <a
               href="#contact"
               className="text-sm text-muted-foreground hover:text-primary transition-colors link-underline"
             >
-              Contact
+              {t("footer.contact")}
             </a>
           </nav>
         </motion.div>
