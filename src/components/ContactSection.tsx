@@ -1,14 +1,12 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import { Mail, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { t } = useLanguage();
 
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
@@ -29,9 +27,9 @@ const ContactSection = () => {
             transition={{ delay: 0.3, duration: 0.6 }}
             className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animated-underline-contact ${isInView ? 'in-view' : ''}`}
           >
-            {t("contact.title1")}
+            Interested in working
             <br />
-            <span className="gradient-text">{t("contact.title2")}</span>
+            <span className="gradient-text">together?</span>
           </motion.h2>
 
           <motion.p
@@ -40,7 +38,7 @@ const ContactSection = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-xl text-muted-foreground mb-10 max-w-xl mx-auto"
           >
-            {t("contact.description")}
+            Let's discuss your project and see how I can help bring your vision to life.
           </motion.p>
 
           <motion.div
@@ -54,7 +52,7 @@ const ContactSection = () => {
                 className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-7 text-xl font-medium rounded-full transition-all duration-300 btn-glow"
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  {t("contact.cta")}
+                  Get in touch
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
                 </span>
               </Button>

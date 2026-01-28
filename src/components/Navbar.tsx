@@ -2,20 +2,17 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
-import { useLanguage } from "@/contexts/LanguageContext";
+
+const navLinks = [
+  { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
+  { label: "Work", href: "#portfolio" },
+  { label: "Process", href: "#process" },
+];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { t } = useLanguage();
-
-  const navLinks = [
-    { label: t("nav.about"), href: "#about" },
-    { label: t("nav.skills"), href: "#skills" },
-    { label: t("nav.work"), href: "#portfolio" },
-    { label: t("nav.process"), href: "#process" },
-  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,19 +59,18 @@ const Navbar = () => {
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <button
-                  key={link.href}
+                  key={link.label}
                   onClick={() => scrollToSection(link.href)}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors link-underline"
                 >
                   {link.label}
                 </button>
               ))}
-              <LanguageSwitcher />
               <Button
                 onClick={() => scrollToSection("#contact")}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6"
               >
-                {t("nav.contact")}
+                Contact
               </Button>
             </div>
 
@@ -108,21 +104,18 @@ const Navbar = () => {
               <div className="flex flex-col gap-4">
                 {navLinks.map((link) => (
                   <button
-                    key={link.href}
+                    key={link.label}
                     onClick={() => scrollToSection(link.href)}
                     className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors text-left py-2"
                   >
                     {link.label}
                   </button>
                 ))}
-                <div className="py-2">
-                  <LanguageSwitcher />
-                </div>
                 <Button
                   onClick={() => scrollToSection("#contact")}
                   className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full mt-2"
                 >
-                  {t("nav.contact")}
+                  Contact
                 </Button>
               </div>
             </div>

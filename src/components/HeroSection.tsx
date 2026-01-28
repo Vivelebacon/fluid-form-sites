@@ -1,11 +1,8 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
-  const { t } = useLanguage();
-
   const scrollToWork = () => {
     document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -91,7 +88,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            {t("hero.badge")}
+            Freelance Web Designer
           </motion.span>
 
           <motion.h1
@@ -100,9 +97,9 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            {t("hero.title1")}
+            Modern Websites
             <br />
-            <span className="gradient-text">{t("hero.title2")}</span>
+            <span className="gradient-text">Designed to Perform</span>
           </motion.h1>
 
           <motion.p
@@ -111,7 +108,8 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            {t("hero.description")}
+            I design clean, modern, and high-performing websites for businesses
+            that want to stand out.
           </motion.p>
 
           <motion.div
@@ -125,7 +123,7 @@ const HeroSection = () => {
               onClick={scrollToWork}
               className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-medium rounded-full transition-all duration-300 btn-glow"
             >
-              <span className="relative z-10">{t("hero.cta.work")}</span>
+              <span className="relative z-10">View my work</span>
             </Button>
             <Button
               size="lg"
@@ -133,7 +131,7 @@ const HeroSection = () => {
               onClick={scrollToContact}
               className="px-8 py-6 text-lg font-medium rounded-full border-muted-foreground/30 hover:border-primary hover:text-primary transition-all duration-300 btn-bounce btn-glow"
             >
-              {t("hero.cta.contact")}
+              Get in touch
             </Button>
           </motion.div>
         </motion.div>
