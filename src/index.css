@@ -187,7 +187,7 @@
   .animated-underline::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -8px;
     left: 0;
     width: 0;
     height: 3px;
@@ -198,6 +198,32 @@
 
   .animated-underline.in-view::after {
     width: 100%;
+  }
+
+  /* Bounce hover effect for service items */
+  .hover-bounce {
+    @apply transition-transform duration-300;
+  }
+
+  .hover-bounce:hover {
+    animation: bounce-subtle 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes bounce-subtle {
+    0%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+    60% { transform: translateY(-3px); }
+  }
+
+  /* Bounce effect for buttons */
+  .btn-bounce:hover {
+    animation: btn-bounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes btn-bounce {
+    0%, 100% { transform: scale(1); }
+    40% { transform: scale(1.05); }
+    60% { transform: scale(1.02); }
   }
 
   /* Animated underline for contact section - positioned lower */
