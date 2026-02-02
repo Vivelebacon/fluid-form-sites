@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Mail, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const ContactSection = () => {
   const ref = useRef(null);
@@ -46,7 +47,7 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.5, duration: 0.6 }}
           >
-            <a href="mailto:contact@hugowebdesign.com">
+            <Link to="/contact">
               <Button
                 size="lg"
                 className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-7 text-xl font-medium rounded-full transition-all duration-300 btn-glow"
@@ -56,7 +57,7 @@ const ContactSection = () => {
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
                 </span>
               </Button>
-            </a>
+            </Link>
           </motion.div>
 
           {/* Decorative dots */}

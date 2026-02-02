@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -13,6 +14,7 @@ const navLinks = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +29,11 @@ const Navbar = () => {
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: "smooth" });
     setIsMobileMenuOpen(false);
+  };
+
+  const goToContact = () => {
+    setIsMobileMenuOpen(false);
+    navigate("/contact");
   };
 
   return (
@@ -67,7 +74,7 @@ const Navbar = () => {
                 </button>
               ))}
               <Button
-                onClick={() => scrollToSection("#contact")}
+                onClick={goToContact}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6"
               >
                 Contact
@@ -112,7 +119,7 @@ const Navbar = () => {
                   </button>
                 ))}
                 <Button
-                  onClick={() => scrollToSection("#contact")}
+                  onClick={goToContact}
                   className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full mt-2"
                 >
                   Contact
