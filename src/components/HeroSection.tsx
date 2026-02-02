@@ -1,14 +1,17 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
   const scrollToWork = () => {
     document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  const goToContact = () => {
+    navigate("/contact");
   };
 
   return (
@@ -128,7 +131,7 @@ const HeroSection = () => {
             <Button
               size="lg"
               variant="outline"
-              onClick={scrollToContact}
+              onClick={goToContact}
               className="px-8 py-6 text-lg font-medium rounded-full border-muted-foreground/30 hover:border-primary hover:text-primary transition-all duration-300 btn-bounce btn-glow"
             >
               Get in touch
