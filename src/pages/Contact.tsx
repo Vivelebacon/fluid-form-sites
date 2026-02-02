@@ -23,7 +23,6 @@ const contactSchema = z.object({
   email: z.string().trim().email("Please enter a valid email").max(255, "Email must be less than 255 characters"),
   company: z.string().trim().max(100, "Company name must be less than 100 characters").optional(),
   projectType: z.string().optional(),
-  budget: z.string().optional(),
   message: z.string().trim().min(1, "Message is required").max(2000, "Message must be less than 2000 characters"),
   // Honeypot field
   website: z.string().max(0, "Bot detected").optional(),
@@ -38,14 +37,6 @@ const projectTypes = [
   "E-commerce",
   "Web Application",
   "Other",
-];
-
-const budgetRanges = [
-  "Less than €2,000",
-  "€2,000 - €5,000",
-  "€5,000 - €10,000",
-  "€10,000 - €20,000",
-  "€20,000+",
 ];
 
 const Contact = () => {
@@ -65,7 +56,6 @@ const Contact = () => {
       email: "",
       company: "",
       projectType: "",
-      budget: "",
       message: "",
       website: "",
     },
@@ -94,7 +84,6 @@ const Contact = () => {
           email: data.email,
           company: data.company || "Not provided",
           projectType: data.projectType || "Not specified",
-          budget: data.budget || "Not specified",
           message: data.message,
           _subject: `New inquiry — HugoWebDesign.com — ${data.name}`,
         }),
@@ -282,43 +271,23 @@ const Contact = () => {
                     />
                   </div>
 
-                  {/* Project Type & Budget row */}
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">
-                        Project Type <span className="text-muted-foreground text-xs">(optional)</span>
-                      </Label>
-                      <Select onValueChange={(value) => setValue("projectType", value)}>
-                        <SelectTrigger className="h-12 rounded-xl bg-background/50 border-border/50 focus:border-primary">
-                          <SelectValue placeholder="Select a type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {projectTypes.map((type) => (
-                            <SelectItem key={type} value={type}>
-                              {type}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">
-                        Budget Range <span className="text-muted-foreground text-xs">(optional)</span>
-                      </Label>
-                      <Select onValueChange={(value) => setValue("budget", value)}>
-                        <SelectTrigger className="h-12 rounded-xl bg-background/50 border-border/50 focus:border-primary">
-                          <SelectValue placeholder="Select a range" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {budgetRanges.map((range) => (
-                            <SelectItem key={range} value={range}>
-                              {range}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                  {/* Project Type */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">
+                      Project Type <span className="text-muted-foreground text-xs">(optional)</span>
+                    </Label>
+                    <Select onValueChange={(value) => setValue("projectType", value)}>
+                      <SelectTrigger className="h-12 rounded-xl bg-background/50 border-border/50 focus:border-primary">
+                        <SelectValue placeholder="Select a type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {projectTypes.map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   {/* Message */}
