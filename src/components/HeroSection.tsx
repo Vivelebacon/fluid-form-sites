@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import Spline from "@splinetool/react-spline";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -74,7 +73,7 @@ const HeroSection = () => {
       </div>
 
       {/* Grid overlay with parallax */}
-      <motion.div
+      <motion.div 
         className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]"
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -95,22 +94,16 @@ const HeroSection = () => {
             Freelance Web Designer
           </motion.span>
 
-          <div className="relative mx-auto mb-6 w-fit">
-            <motion.h1
-              className="relative z-10 text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-shadow-lg"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              Modern Websites
-              <br />
-              <span className="gradient-text">Designed to Perform</span>
-            </motion.h1>
-
-            <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 h-[220px] w-[320px] -translate-x-1/2 -translate-y-1/2 opacity-95 md:h-[320px] md:w-[540px]">
-              <Spline scene="https://prod.spline.design/iDCTPWmrJXR5sPHx/scene.splinecode" />
-            </div>
-          </div>
+          <motion.h1
+            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 text-shadow-lg"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            Modern Websites
+            <br />
+            <span className="gradient-text">Designed to Perform</span>
+          </motion.h1>
 
           <motion.p
             className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 font-light"
