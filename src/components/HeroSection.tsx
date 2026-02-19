@@ -16,7 +16,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden animated-gradient">
+    <section className="relative min-h-[120vh] md:min-h-[130vh] flex items-center justify-center overflow-hidden animated-gradient">
       {/* Enhanced parallax gradient orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -80,9 +80,11 @@ const HeroSection = () => {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="absolute inset-0 z-[6] translate-y-12 md:translate-y-20">
+      <div className="absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-10 md:translate-y-20">
         <Spline scene="https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode" />
       </div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-56 bg-gradient-to-b from-transparent via-background/80 to-background" />
 
       <div className="relative z-20 section-container text-center">
         <motion.div
