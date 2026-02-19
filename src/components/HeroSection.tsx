@@ -80,7 +80,11 @@ const HeroSection = () => {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="relative z-10 section-container text-center">
+      <div className="absolute inset-0 z-[6] translate-y-12 md:translate-y-20">
+        <Spline scene="https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode" />
+      </div>
+
+      <div className="relative z-20 section-container text-center">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -95,21 +99,16 @@ const HeroSection = () => {
             Freelance Web Designer
           </motion.span>
 
-          <div className="relative mx-auto mb-6 w-fit">
-            <div className="absolute left-1/2 top-1/2 z-0 h-[220px] w-[340px] -translate-x-1/2 -translate-y-1/2 md:h-[320px] md:w-[560px]">
-              <Spline scene="https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode" />
-            </div>
-            <motion.h1
-              className="relative z-10 text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-shadow-lg"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              Modern Websites
-              <br />
-              <span className="gradient-text">Designed to Perform</span>
-            </motion.h1>
-          </div>
+          <motion.h1
+            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 text-shadow-lg"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            Modern Websites
+            <br />
+            <span className="gradient-text">Designed to Perform</span>
+          </motion.h1>
 
           <motion.p
             className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 font-light"
