@@ -2,9 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { lazy, Suspense, useEffect, useState } from "react";
-
-const Spline = lazy(() => import("@splinetool/react-spline"));
+import { useEffect, useState } from "react";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -70,9 +68,12 @@ const HeroSection = () => {
 
       {canRenderSpline && isSplineVisible ? (
         <div className="absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10">
-          <Suspense fallback={<div className="h-full w-full" />}>
-            <Spline scene="https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode" />
-          </Suspense>
+          <iframe
+            src="https://my.spline.design/qLLBTAGjsewH6gkR/"
+            title="Hero 3D background"
+            className="h-full w-full border-0"
+            loading="lazy"
+          />
         </div>
       ) : (
         <div className="pointer-events-none absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10 bg-gradient-to-b from-primary/5 via-primary/10 to-transparent" />
