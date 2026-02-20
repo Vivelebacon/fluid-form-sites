@@ -164,7 +164,7 @@ const HeroSection = () => {
               size="lg"
               variant="outline"
               onClick={goToContact}
-              className="px-8 py-6 text-lg font-medium rounded-full border-muted-foreground/30 hover:border-primary hover:text-primary transition-all duration-300 btn-bounce btn-glow"
+              className="group relative overflow-hidden px-8 py-6 text-lg font-medium rounded-full border-muted-foreground/30 text-foreground hover:bg-transparent hover:border-muted-foreground/30 hover:text-foreground transition-all duration-300 btn-glow"
             >
               Get in touch
             </Button>
