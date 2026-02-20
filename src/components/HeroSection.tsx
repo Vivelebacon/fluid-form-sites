@@ -1,9 +1,8 @@
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
 
@@ -11,12 +10,6 @@ const HeroSection = () => {
   const navigate = useNavigate();
   const [canRenderSpline, setCanRenderSpline] = useState(false);
   const [isSplineVisible, setIsSplineVisible] = useState(false);
-  const [isFinePointer, setIsFinePointer] = useState(true);
-  const rafRef = useRef<number | null>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 60, damping: 24, mass: 0.6 });
-  const springY = useSpring(mouseY, { stiffness: 60, damping: 24, mass: 0.6 });
 
   const scrollToWork = () => {
     document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
@@ -38,125 +31,48 @@ const HeroSection = () => {
 
     const enableSpline = !prefersReducedMotion && !isCoarsePointer && !isSmallScreen && !isLowCpu && !saveDataEnabled;
     setCanRenderSpline(enableSpline);
-    setIsFinePointer(!isCoarsePointer);
 
     if (!enableSpline) {
       setIsSplineVisible(false);
       return;
     }
-
-    const timer = window.setTimeout(() => setIsSplineVisible(true), 250);
-    return () => window.clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (rafRef.current !== null) {
-        window.cancelAnimationFrame(rafRef.current);
-      }
+    const scheduleVisible = () => {
+      const timer = window.setTimeout(() => setIsSplineVisible(true), 900);
+      return () => window.clearTimeout(timer);
     };
-  }, []);
 
-  const handleHeroMouseMove = (event: MouseEvent<HTMLElement>) => {
-    if (!canRenderSpline || !isFinePointer) return;
-    if (rafRef.current !== null) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 16;
-    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 12;
-    rafRef.current = window.requestAnimationFrame(() => {
-      mouseX.set(x);
-      mouseY.set(y);
-      rafRef.current = null;
-    });
-  };
-
-  const resetHeroMouseOffset = () => {
-    if (rafRef.current !== null) {
-      window.cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
+    if ("requestIdleCallback" in window) {
+      const idleId = (window as Window & { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(
+        () => setIsSplineVisible(true)
+      );
+      const fallbackCleanup = scheduleVisible();
+      return () => {
+        (window as Window & { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback?.(idleId);
+        fallbackCleanup();
+      };
     }
-    mouseX.set(0);
-    mouseY.set(0);
-  };
+
+    return scheduleVisible();
+  }, []);
 
   return (
-    <section
-      className="relative min-h-[120vh] md:min-h-[130vh] flex items-center justify-center overflow-hidden animated-gradient"
-      onMouseMove={handleHeroMouseMove}
-      onMouseLeave={resetHeroMouseOffset}
-    >
+    <section className="relative min-h-[120vh] md:min-h-[130vh] flex items-center justify-center overflow-hidden animated-gradient">
       {/* Enhanced parallax gradient orbs */}
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[100px]"
-          animate={{
-            x: [0, 80, 0],
-            y: [0, 50, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-primary/5 blur-[80px]"
-          animate={{
-            x: [0, -60, 0],
-            y: [0, -80, 0],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 right-1/3 w-[300px] h-[300px] rounded-full bg-primary/8 blur-[60px]"
-          animate={{
-            x: [0, 40, 0],
-            y: [0, -40, 0],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-        {/* Additional subtle orb */}
-        <motion.div
-          className="absolute bottom-1/3 left-1/3 w-[250px] h-[250px] rounded-full bg-primary/6 blur-[70px]"
-          animate={{
-            x: [0, -30, 0],
-            y: [0, 40, 0],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
+        <div className="absolute top-1/4 left-1/4 h-[420px] w-[420px] rounded-full bg-primary/10 blur-[85px]" />
+        <div className="absolute bottom-1/4 right-1/4 h-[320px] w-[320px] rounded-full bg-primary/5 blur-[70px]" />
+        <div className="absolute top-1/2 right-1/3 h-[260px] w-[260px] rounded-full bg-primary/8 blur-[55px]" />
+        <div className="absolute bottom-1/3 left-1/3 h-[220px] w-[220px] rounded-full bg-primary/6 blur-[60px]" />
       </div>
 
-      {/* Grid overlay with parallax */}
-      <motion.div 
-        className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]"
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]" />
 
       {canRenderSpline && isSplineVisible ? (
-        <motion.div
-          className="absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10 will-change-transform"
-          style={{ x: springX, y: springY }}
-        >
+        <div className="absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10">
           <Suspense fallback={<div className="h-full w-full" />}>
             <Spline scene="https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode" />
           </Suspense>
-        </motion.div>
+        </div>
       ) : (
         <div className="pointer-events-none absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10 bg-gradient-to-b from-primary/5 via-primary/10 to-transparent" />
       )}
