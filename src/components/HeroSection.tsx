@@ -71,7 +71,7 @@ const HeroSection = () => {
       {canRenderSpline && isSplineVisible ? (
         <div className="absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10">
           <Suspense fallback={<div className="h-full w-full" />}>
-            <Spline scene="https://prod.spline.design/FoRtrfZ73sSLPbrE/scene.splinecode" />
+            <Spline scene="https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode" />
           </Suspense>
         </div>
       ) : (
