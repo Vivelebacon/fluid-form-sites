@@ -1,16 +1,22 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import Spline from "@splinetool/react-spline";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
+
+const Spline = lazy(() => import("@splinetool/react-spline"));
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const [canRenderSpline, setCanRenderSpline] = useState(false);
+  const [isSplineVisible, setIsSplineVisible] = useState(false);
+  const [isFinePointer, setIsFinePointer] = useState(true);
+  const rafRef = useRef<number | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 80, damping: 20, mass: 0.4 });
-  const springY = useSpring(mouseY, { stiffness: 80, damping: 20, mass: 0.4 });
+  const springX = useSpring(mouseX, { stiffness: 60, damping: 24, mass: 0.6 });
+  const springY = useSpring(mouseY, { stiffness: 60, damping: 24, mass: 0.6 });
 
   const scrollToWork = () => {
     document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
@@ -20,15 +26,55 @@ const HeroSection = () => {
     navigate("/contact");
   };
 
+  useEffect(() => {
+    const connection = navigator as Navigator & {
+      connection?: { saveData?: boolean };
+    };
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    const isSmallScreen = window.matchMedia("(max-width: 900px)").matches;
+    const isLowCpu = navigator.hardwareConcurrency <= 4;
+    const saveDataEnabled = connection.connection?.saveData === true;
+
+    const enableSpline = !prefersReducedMotion && !isCoarsePointer && !isSmallScreen && !isLowCpu && !saveDataEnabled;
+    setCanRenderSpline(enableSpline);
+    setIsFinePointer(!isCoarsePointer);
+
+    if (!enableSpline) {
+      setIsSplineVisible(false);
+      return;
+    }
+
+    const timer = window.setTimeout(() => setIsSplineVisible(true), 250);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, []);
+
   const handleHeroMouseMove = (event: MouseEvent<HTMLElement>) => {
+    if (!canRenderSpline || !isFinePointer) return;
+    if (rafRef.current !== null) return;
     const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 24;
-    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 18;
-    mouseX.set(x);
-    mouseY.set(y);
+    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 16;
+    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 12;
+    rafRef.current = window.requestAnimationFrame(() => {
+      mouseX.set(x);
+      mouseY.set(y);
+      rafRef.current = null;
+    });
   };
 
   const resetHeroMouseOffset = () => {
+    if (rafRef.current !== null) {
+      window.cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
     mouseX.set(0);
     mouseY.set(0);
   };
@@ -102,12 +148,18 @@ const HeroSection = () => {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <motion.div
-        className="absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10"
-        style={{ x: springX, y: springY }}
-      >
-        <Spline scene="https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode" />
-      </motion.div>
+      {canRenderSpline && isSplineVisible ? (
+        <motion.div
+          className="absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10 will-change-transform"
+          style={{ x: springX, y: springY }}
+        >
+          <Suspense fallback={<div className="h-full w-full" />}>
+            <Spline scene="https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode" />
+          </Suspense>
+        </motion.div>
+      ) : (
+        <div className="pointer-events-none absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10 bg-gradient-to-b from-primary/5 via-primary/10 to-transparent" />
+      )}
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-56 bg-gradient-to-b from-transparent via-background/80 to-background" />
 
