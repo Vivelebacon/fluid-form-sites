@@ -10,6 +10,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
   const [canRenderSpline, setCanRenderSpline] = useState(false);
   const [isSplineVisible, setIsSplineVisible] = useState(false);
+  const [is3DEnabled, setIs3DEnabled] = useState(false);
 
   const scrollToWork = () => {
     document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
@@ -32,7 +33,7 @@ const HeroSection = () => {
     const enableSpline = !prefersReducedMotion && !isCoarsePointer && !isSmallScreen && !isLowCpu && !saveDataEnabled;
     setCanRenderSpline(enableSpline);
 
-    if (!enableSpline) {
+    if (!enableSpline || !is3DEnabled) {
       setIsSplineVisible(false);
       return;
     }
@@ -53,7 +54,7 @@ const HeroSection = () => {
     }
 
     return scheduleVisible();
-  }, []);
+  }, [is3DEnabled]);
 
   return (
     <section className="relative min-h-[120vh] md:min-h-[130vh] flex items-center justify-center overflow-hidden animated-gradient">
@@ -121,6 +122,16 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.6 }}
           >
+            {!is3DEnabled && canRenderSpline && (
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => setIs3DEnabled(true)}
+                className="group relative overflow-hidden px-8 py-6 text-lg font-medium rounded-full border-primary/30 text-primary hover:bg-primary/10 hover:text-primary transition-all duration-300 btn-glow"
+              >
+                Enable 3D background
+              </Button>
+            )}
             <Button
               size="lg"
               onClick={scrollToWork}
