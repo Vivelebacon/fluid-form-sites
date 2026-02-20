@@ -1,11 +1,16 @@
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import Spline from "@splinetool/react-spline";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import type { MouseEvent } from "react";
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 80, damping: 20, mass: 0.4 });
+  const springY = useSpring(mouseY, { stiffness: 80, damping: 20, mass: 0.4 });
 
   const scrollToWork = () => {
     document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
@@ -15,8 +20,25 @@ const HeroSection = () => {
     navigate("/contact");
   };
 
+  const handleHeroMouseMove = (event: MouseEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 24;
+    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 18;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const resetHeroMouseOffset = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
-    <section className="relative min-h-[120vh] md:min-h-[130vh] flex items-center justify-center overflow-hidden animated-gradient">
+    <section
+      className="relative min-h-[120vh] md:min-h-[130vh] flex items-center justify-center overflow-hidden animated-gradient"
+      onMouseMove={handleHeroMouseMove}
+      onMouseLeave={resetHeroMouseOffset}
+    >
       {/* Enhanced parallax gradient orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -80,9 +102,12 @@ const HeroSection = () => {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-10 md:translate-y-20">
+      <motion.div
+        className="absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10"
+        style={{ x: springX, y: springY }}
+      >
         <Spline scene="https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode" />
-      </div>
+      </motion.div>
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-56 bg-gradient-to-b from-transparent via-background/80 to-background" />
 
