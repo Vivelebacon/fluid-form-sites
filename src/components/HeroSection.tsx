@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n";
 import { useNavigate } from "react-router-dom";
 // Backup 3D scene URL for quick re-enable:
 // https://prod.spline.design/qLLBTAGjsewH6gkR/scene.splinecode
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   const scrollToWork = () => {
     document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
@@ -44,7 +46,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Freelance Web Designer
+            {language === "fr" ? "Web Designer Freelance" : "Freelance Web Designer"}
           </motion.span>
 
           <motion.h1
@@ -53,9 +55,11 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            Modern Websites
+            {language === "fr" ? "Sites Web Modernes" : "Modern Websites"}
             <br />
-            <span className="gradient-text">Designed to Perform</span>
+            <span className="gradient-text">
+              {language === "fr" ? "Concus pour Performer" : "Designed to Perform"}
+            </span>
           </motion.h1>
 
           <motion.p
@@ -64,8 +68,9 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            I design clean, modern, and high-performing websites for businesses
-            that want to stand out.
+            {language === "fr"
+              ? "Je cree des sites web propres, modernes et performants pour les entreprises qui veulent se demarquer."
+              : "I design clean, modern, and high-performing websites for businesses that want to stand out."}
           </motion.p>
 
           <motion.div
@@ -79,7 +84,9 @@ const HeroSection = () => {
               onClick={scrollToWork}
               className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-medium rounded-full transition-all duration-300 btn-glow"
             >
-              <span className="relative z-10">View my work</span>
+              <span className="relative z-10">
+                {language === "fr" ? "Voir mes projets" : "View my work"}
+              </span>
             </Button>
             <Button
               size="lg"
@@ -87,7 +94,7 @@ const HeroSection = () => {
               onClick={goToContact}
               className="group relative overflow-hidden px-8 py-6 text-lg font-medium rounded-full border-muted-foreground/30 text-foreground hover:bg-transparent hover:border-muted-foreground/30 hover:text-foreground transition-all duration-300 btn-glow"
             >
-              Get in touch
+              {language === "fr" ? "Me contacter" : "Get in touch"}
             </Button>
           </motion.div>
         </motion.div>

@@ -1,17 +1,17 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/i18n";
 
 const ContactSection = () => {
   const ref = useRef(null);
+  const { language } = useLanguage();
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
-      {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 blur-3xl rounded-full" />
 
@@ -26,11 +26,11 @@ const ContactSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animated-underline-contact ${isInView ? 'in-view' : ''}`}
+            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animated-underline-contact ${isInView ? "in-view" : ""}`}
           >
-            Interested in working
+            {language === "fr" ? "Envie de travailler" : "Interested in working"}
             <br />
-            <span className="gradient-text">together?</span>
+            <span className="gradient-text">{language === "fr" ? "ensemble ?" : "together?"}</span>
           </motion.h2>
 
           <motion.p
@@ -39,7 +39,9 @@ const ContactSection = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-xl text-muted-foreground mb-10 max-w-xl mx-auto"
           >
-            Let's discuss your project and see how I can help bring your vision to life.
+            {language === "fr"
+              ? "Parlons de votre projet et voyons comment je peux donner vie a votre vision."
+              : "Let's discuss your project and see how I can help bring your vision to life."}
           </motion.p>
 
           <motion.div
@@ -53,14 +55,13 @@ const ContactSection = () => {
                 className="group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-7 text-xl font-medium rounded-full transition-all duration-300 btn-glow"
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  Get in touch
+                  {language === "fr" ? "Me contacter" : "Get in touch"}
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
                 </span>
               </Button>
             </Link>
           </motion.div>
 
-          {/* Decorative dots */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}

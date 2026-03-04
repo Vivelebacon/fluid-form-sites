@@ -1,47 +1,58 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Mail, ArrowLeft, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useLanguage } from "@/i18n";
 import { cn } from "@/lib/utils";
 
-const contactSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  email: z.string().trim().email("Please enter a valid email").max(255, "Email must be less than 255 characters"),
-  company: z.string().trim().max(100, "Company name must be less than 100 characters").optional(),
-  projectType: z.string().optional(),
-  message: z.string().trim().min(1, "Message is required").max(2000, "Message must be less than 2000 characters"),
-  // Honeypot field
-  website: z.string().max(0, "Bot detected").optional(),
-});
+const createContactSchema = (language: "en" | "fr") =>
+  z.object({
+    name: z
+      .string()
+      .trim()
+      .min(1, language === "fr" ? "Le nom est requis" : "Name is required")
+      .max(100, language === "fr" ? "Le nom doit faire moins de 100 caracteres" : "Name must be less than 100 characters"),
+    email: z
+      .string()
+      .trim()
+      .email(language === "fr" ? "Entrez un email valide" : "Please enter a valid email")
+      .max(255, language === "fr" ? "L'email doit faire moins de 255 caracteres" : "Email must be less than 255 characters"),
+    company: z
+      .string()
+      .trim()
+      .max(100, language === "fr" ? "Le nom de societe doit faire moins de 100 caracteres" : "Company name must be less than 100 characters")
+      .optional(),
+    projectType: z.string().optional(),
+    message: z
+      .string()
+      .trim()
+      .min(1, language === "fr" ? "Le message est requis" : "Message is required")
+      .max(2000, language === "fr" ? "Le message doit faire moins de 2000 caracteres" : "Message must be less than 2000 characters"),
+    website: z.string().max(0, language === "fr" ? "Bot detecte" : "Bot detected").optional(),
+  });
 
-type ContactFormData = z.infer<typeof contactSchema>;
-
-const projectTypes = [
-  "New Website",
-  "Website Redesign",
-  "Landing Page",
-  "E-commerce",
-  "Web Application",
-  "Other",
-];
+type ContactFormData = z.infer<ReturnType<typeof createContactSchema>>;
 
 const Contact = () => {
+  const { language } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const contactSchema = useMemo(() => createContactSchema(language), [language]);
+
+  const projectTypes =
+    language === "fr"
+      ? ["Nouveau site web", "Refonte de site", "Landing page", "E-commerce", "Application web", "Autre"]
+      : ["New Website", "Website Redesign", "Landing Page", "E-commerce", "Web Application", "Other"];
 
   const {
     register,
@@ -62,7 +73,6 @@ const Contact = () => {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    // Honeypot check
     if (data.website) {
       return;
     }
@@ -71,8 +81,6 @@ const Contact = () => {
     setSubmitStatus("idle");
 
     try {
-      // Using Formspree for form submission
-      // Replace YOUR_FORM_ID with your actual Formspree form ID
       const response = await fetch("https://formspree.io/f/mbdkarob", {
         method: "POST",
         headers: {
@@ -82,10 +90,10 @@ const Contact = () => {
         body: JSON.stringify({
           name: data.name,
           email: data.email,
-          company: data.company || "Not provided",
-          projectType: data.projectType || "Not specified",
+          company: data.company || (language === "fr" ? "Non renseigne" : "Not provided"),
+          projectType: data.projectType || (language === "fr" ? "Non precise" : "Not specified"),
           message: data.message,
-          _subject: `New inquiry — HugoWebDesign.com — ${data.name}`,
+          _subject: `New inquiry - HugoWebDesign.com - ${data.name}`,
         }),
       });
 
@@ -105,28 +113,27 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Back navigation */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="fixed top-0 left-0 right-0 z-50 py-6 bg-background/80 backdrop-blur-lg border-b border-border/50"
       >
-        <div className="section-container">
+        <div className="section-container flex items-center justify-between gap-4">
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span className="text-sm font-medium">Back to Home</span>
+            <span className="text-sm font-medium">{language === "fr" ? "Retour a l'accueil" : "Back to Home"}</span>
           </Link>
+          <LanguageSwitcher />
         </div>
       </motion.div>
 
       <div className="pt-32 pb-20">
         <div className="section-container">
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-20">
-            {/* Left side - Header & Info */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -134,22 +141,22 @@ const Contact = () => {
               className="lg:col-span-2"
             >
               <span className="text-sm font-medium text-primary tracking-wider uppercase mb-4 block">
-                Get in Touch
+                {language === "fr" ? "Contact" : "Get in Touch"}
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                Let's work
+                {language === "fr" ? "Travaillons" : "Let's work"}
                 <br />
-                <span className="gradient-text">together</span>
+                <span className="gradient-text">{language === "fr" ? "ensemble" : "together"}</span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-                Ready to bring your vision to life? I'd love to hear about your project. 
-                Fill out the form and I'll get back to you within 24 hours.
+                {language === "fr"
+                  ? "Pret a donner vie a votre vision ? Parlez-moi de votre projet. Remplissez le formulaire et je vous repondrai sous 24 heures."
+                  : "Ready to bring your vision to life? I'd love to hear about your project. Fill out the form and I'll get back to you within 24 hours."}
               </p>
 
-              {/* Contact info sidebar */}
               <div className="space-y-6 p-6 rounded-2xl bg-muted/30 border border-border/50">
                 <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">
-                  Direct Contact
+                  {language === "fr" ? "Contact direct" : "Direct Contact"}
                 </h3>
                 <a
                   href="mailto:contact@hugowebdesign.com"
@@ -163,7 +170,6 @@ const Contact = () => {
               </div>
             </motion.div>
 
-            {/* Right side - Form */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -179,16 +185,12 @@ const Contact = () => {
                   <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6">
                     <CheckCircle2 className="w-8 h-8 text-green-500" />
                   </div>
-                  <h2 className="text-2xl font-bold mb-3">Message Sent!</h2>
+                  <h2 className="text-2xl font-bold mb-3">{language === "fr" ? "Message envoye !" : "Message Sent!"}</h2>
                   <p className="text-muted-foreground mb-6">
-                    Thanks! I'll get back to you shortly.
+                    {language === "fr" ? "Merci ! Je reviens vers vous rapidement." : "Thanks! I'll get back to you shortly."}
                   </p>
-                  <Button
-                    onClick={() => setSubmitStatus("idle")}
-                    variant="outline"
-                    className="rounded-full"
-                  >
-                    Send Another Message
+                  <Button onClick={() => setSubmitStatus("idle")} variant="outline" className="rounded-full">
+                    {language === "fr" ? "Envoyer un autre message" : "Send Another Message"}
                   </Button>
                 </motion.div>
               ) : (
@@ -197,45 +199,37 @@ const Contact = () => {
                   className="p-8 md:p-12 rounded-3xl bg-muted/30 border border-border/50 space-y-6"
                 >
                   {submitStatus === "error" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 flex items-center gap-3"
-                >
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 flex items-center gap-3"
+                    >
                       <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0" />
                       <p className="text-sm text-destructive">
-                        Something went wrong. Please try again or email me directly.
+                        {language === "fr"
+                          ? "Une erreur est survenue. Reessayez ou contactez-moi directement par email."
+                          : "Something went wrong. Please try again or email me directly."}
                       </p>
                     </motion.div>
                   )}
 
-                  {/* Honeypot field - hidden from users */}
-                  <input
-                    type="text"
-                    {...register("website")}
-                    className="hidden"
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
+                  <input type="text" {...register("website")} className="hidden" tabIndex={-1} autoComplete="off" />
 
-                  {/* Name & Email row */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name" className="text-sm font-medium">
-                        Full Name <span className="text-destructive">*</span>
+                        {language === "fr" ? "Nom complet" : "Full Name"} <span className="text-destructive">*</span>
                       </Label>
                       <Input
                         id="name"
                         {...register("name")}
-                        placeholder="John Doe"
+                        placeholder={language === "fr" ? "Jean Dupont" : "John Doe"}
                         className={cn(
                           "h-12 rounded-xl bg-background/50 border-border/50 focus:border-primary transition-colors",
                           errors.name && "border-destructive focus:border-destructive"
                         )}
                       />
-                      {errors.name && (
-                        <p className="text-xs text-destructive">{errors.name.message}</p>
-                      )}
+                      {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
                     </div>
 
                     <div className="space-y-2">
@@ -252,33 +246,35 @@ const Contact = () => {
                           errors.email && "border-destructive focus:border-destructive"
                         )}
                       />
-                      {errors.email && (
-                        <p className="text-xs text-destructive">{errors.email.message}</p>
-                      )}
+                      {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
                     </div>
                   </div>
 
-                  {/* Company */}
                   <div className="space-y-2">
                     <Label htmlFor="company" className="text-sm font-medium">
-                      Company <span className="text-muted-foreground text-xs">(optional)</span>
+                      {language === "fr" ? "Societe" : "Company"}{" "}
+                      <span className="text-muted-foreground text-xs">
+                        ({language === "fr" ? "optionnel" : "optional"})
+                      </span>
                     </Label>
                     <Input
                       id="company"
                       {...register("company")}
-                      placeholder="Your company name"
+                      placeholder={language === "fr" ? "Nom de votre societe" : "Your company name"}
                       className="h-12 rounded-xl bg-background/50 border-border/50 focus:border-primary transition-colors"
                     />
                   </div>
 
-                  {/* Project Type */}
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">
-                      Project Type <span className="text-muted-foreground text-xs">(optional)</span>
+                      {language === "fr" ? "Type de projet" : "Project Type"}{" "}
+                      <span className="text-muted-foreground text-xs">
+                        ({language === "fr" ? "optionnel" : "optional"})
+                      </span>
                     </Label>
                     <Select onValueChange={(value) => setValue("projectType", value)}>
                       <SelectTrigger className="h-12 rounded-xl bg-background/50 border-border/50 focus:border-primary">
-                        <SelectValue placeholder="Select a type" />
+                        <SelectValue placeholder={language === "fr" ? "Selectionnez un type" : "Select a type"} />
                       </SelectTrigger>
                       <SelectContent>
                         {projectTypes.map((type) => (
@@ -290,27 +286,27 @@ const Contact = () => {
                     </Select>
                   </div>
 
-                  {/* Message */}
                   <div className="space-y-2">
                     <Label htmlFor="message" className="text-sm font-medium">
-                      Message <span className="text-destructive">*</span>
+                      {language === "fr" ? "Message" : "Message"} <span className="text-destructive">*</span>
                     </Label>
                     <Textarea
                       id="message"
                       {...register("message")}
-                      placeholder="Tell me about your project, goals, and timeline..."
+                      placeholder={
+                        language === "fr"
+                          ? "Parlez-moi de votre projet, de vos objectifs et de votre timing..."
+                          : "Tell me about your project, goals, and timeline..."
+                      }
                       rows={5}
                       className={cn(
                         "rounded-xl bg-background/50 border-border/50 focus:border-primary transition-colors resize-none",
                         errors.message && "border-destructive focus:border-destructive"
                       )}
                     />
-                    {errors.message && (
-                      <p className="text-xs text-destructive">{errors.message.message}</p>
-                    )}
+                    {errors.message && <p className="text-xs text-destructive">{errors.message.message}</p>}
                   </div>
 
-                  {/* Submit button */}
                   <Button
                     type="submit"
                     disabled={isSubmitting}
@@ -319,15 +315,17 @@ const Contact = () => {
                     {isSubmitting ? (
                       <>
                         <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        Sending...
+                        {language === "fr" ? "Envoi..." : "Sending..."}
                       </>
+                    ) : language === "fr" ? (
+                      "Envoyer le message"
                     ) : (
                       "Send Message"
                     )}
                   </Button>
 
                   <p className="text-xs text-center text-muted-foreground">
-                    I typically respond within 24 hours.
+                    {language === "fr" ? "Je reponds en general sous 24 heures." : "I typically respond within 24 hours."}
                   </p>
                 </form>
               )}

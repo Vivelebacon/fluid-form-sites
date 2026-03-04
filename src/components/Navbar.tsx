@@ -1,20 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n";
 import { useNavigate } from "react-router-dom";
-
-const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Work", href: "#portfolio" },
-  { label: "Process", href: "#process" },
-];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { language } = useLanguage();
   const navigate = useNavigate();
+
+  const navLinks = [
+    { label: language === "fr" ? "A propos" : "About", href: "#about" },
+    { label: language === "fr" ? "Competences" : "Skills", href: "#skills" },
+    { label: language === "fr" ? "Projets" : "Work", href: "#portfolio" },
+    { label: language === "fr" ? "Processus" : "Process", href: "#process" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,18 +46,15 @@ const Navbar = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "py-4 bg-background/80 backdrop-blur-lg border-b border-border/50"
-            : "py-6 bg-transparent"
+          isScrolled ? "py-4 bg-background/80 backdrop-blur-lg border-b border-border/50" : "py-6 bg-transparent"
         }`}
       >
         <div className="section-container">
           <nav className="flex items-center justify-between">
-            {/* Logo */}
             <a
               href="#"
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={(event) => {
+                event.preventDefault();
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className="text-xl font-bold hover:text-primary transition-colors"
@@ -62,7 +62,6 @@ const Navbar = () => {
               Hugo<span className="text-primary">.</span>
             </a>
 
-            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <button
@@ -73,31 +72,23 @@ const Navbar = () => {
                   {link.label}
                 </button>
               ))}
-              <Button
-                onClick={goToContact}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6"
-              >
+              <LanguageSwitcher />
+              <Button onClick={goToContact} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6">
                 Contact
               </Button>
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               className="md:hidden p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label={language === "fr" ? "Ouvrir le menu" : "Toggle menu"}
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </nav>
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -109,6 +100,9 @@ const Navbar = () => {
           >
             <div className="section-container py-6">
               <div className="flex flex-col gap-4">
+                <div className="pb-2">
+                  <LanguageSwitcher />
+                </div>
                 {navLinks.map((link) => (
                   <button
                     key={link.label}
@@ -118,10 +112,7 @@ const Navbar = () => {
                     {link.label}
                   </button>
                 ))}
-                <Button
-                  onClick={goToContact}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full mt-2"
-                >
+                <Button onClick={goToContact} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full mt-2">
                   Contact
                 </Button>
               </div>
