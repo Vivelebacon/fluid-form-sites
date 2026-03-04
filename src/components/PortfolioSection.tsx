@@ -123,8 +123,8 @@ const PortfolioSection = () => {
 
                 <div className="p-8 md:p-12">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="flex h-14 min-w-14 items-center justify-center rounded-xl bg-white/90 px-3 py-2 ring-1 ring-black/5">
-                      <img src={project.logo} alt={`${project.title} logo`} className="max-h-10 w-auto object-contain" />
+                    <div className="flex h-16 min-w-[168px] items-center justify-center overflow-hidden rounded-xl px-0 py-0">
+                      <img src={project.logo} alt={`${project.title} logo`} className="h-full w-full object-contain" />
                     </div>
                     {project.featured && (
                       <motion.div
@@ -163,7 +163,7 @@ const PortfolioSection = () => {
                       className="group/btn relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:shadow-[0_0_30px_hsl(185,55%,45%,0.4)]"
                     >
                       <span className="relative z-10 flex items-center gap-2">
-                        {language === "fr" ? 'Voir le site' : "View website"}
+                        {language === "fr" ? "Voir le site" : "View website"}
                         <ArrowUpRight className="w-5 h-5 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                       </span>
                     </Button>
