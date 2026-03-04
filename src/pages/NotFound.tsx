@@ -18,7 +18,7 @@ const NotFound = () => {
           {language === "fr" ? "Oups ! Page introuvable" : "Oops! Page not found"}
         </p>
         <a href="/" className="text-primary underline hover:text-primary/90">
-          {language === "fr" ? "Retour a l'accueil" : "Return to Home"}
+          {language === "fr" ? "Retour à l'accueil" : "Return to Home"}
         </a>
       </div>
     </div>

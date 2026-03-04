@@ -40,7 +40,7 @@ const ContactSection = () => {
             className="text-xl text-muted-foreground mb-10 max-w-xl mx-auto"
           >
             {language === "fr"
-              ? "Parlons de votre projet et voyons comment je peux donner vie a votre vision."
+              ? "Parlons de votre projet et voyons comment je peux donner vie à votre vision."
               : "Let's discuss your project and see how I can help bring your vision to life."}
           </motion.p>
 

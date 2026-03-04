@@ -17,8 +17,8 @@ const AboutSection = () => {
       ? [
           {
             icon: Monitor,
-            title: "Creation et refonte de sites",
-            description: "Creation de sites modernes depuis zero ou refonte de sites existants.",
+            title: "Création et refonte de sites",
+            description: "Création de sites modernes depuis zéro ou refonte de sites existants.",
           },
           {
             icon: Palette,
@@ -28,17 +28,17 @@ const AboutSection = () => {
           {
             icon: Smartphone,
             title: "Responsive et mobile first",
-            description: "Affichage impeccable sur tous les ecrans et tous les appareils.",
+            description: "Affichage impeccable sur tous les écrans et tous les appareils.",
           },
           {
             icon: Zap,
-            title: "Oriente performance",
-            description: "Mises en page optimisees pour charger vite et mieux convertir.",
+            title: "Orienté performance",
+            description: "Mises en page optimisées pour charger vite et mieux convertir.",
           },
           {
             icon: Settings,
-            title: "Integration d'outils business",
-            description: "Integration fluide de formulaires, widgets et outils personnalises.",
+            title: "Intégration d'outils business",
+            description: "Intégration fluide de formulaires, widgets et outils personnalisés.",
           },
         ]
       : [
@@ -104,15 +104,17 @@ const AboutSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
-            <span className="text-primary font-medium text-sm tracking-wide uppercase">
-              {language === "fr" ? "A PROPOS" : "ABOUT"}
-            </span>
-            <h2 className={`text-4xl md:text-5xl font-bold mt-4 mb-6 animated-underline ${isInView ? "in-view" : ""}`}>
-              {language === "fr" ? "Ce Que Je Fais" : "What I Do"}
-            </h2>
+            <div className="mb-6 flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-6 text-center lg:text-left">
+              <span className="text-primary font-medium text-sm tracking-wide uppercase shrink-0">
+                {language === "fr" ? "À PROPOS" : "ABOUT"}
+              </span>
+              <h2 className={`text-4xl md:text-5xl font-bold animated-underline ${isInView ? "in-view" : ""}`}>
+                {language === "fr" ? "Ce Que Je Fais" : "What I Do"}
+              </h2>
+            </div>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               {language === "fr"
-                ? "Je cree des experiences digitales qui combinent exigence esthetique et efficacite strategique. Chaque projet est traite avec precision et une vraie comprehension de ce qui rend un site performant."
+                ? "Je crée des expériences digitales qui combinent exigence esthétique et efficacité stratégique. Chaque projet est traité avec précision et une vraie compréhension de ce qui rend un site performant."
                 : "I specialize in creating digital experiences that combine aesthetic excellence with strategic functionality. Every project is approached with precision and a deep understanding of what makes websites truly effective."}
             </p>
 

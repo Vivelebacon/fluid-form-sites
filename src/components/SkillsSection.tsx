@@ -17,7 +17,7 @@ const SkillsSection = () => {
           {
             icon: Palette,
             title: "Design UI / UX",
-            description: "Interfaces esthetiques, claires et agreables a utiliser.",
+            description: "Interfaces esthétiques, claires et agréables à utiliser.",
           },
           {
             icon: Layout,
@@ -27,22 +27,22 @@ const SkillsSection = () => {
           {
             icon: Smartphone,
             title: "Responsive Layouts",
-            description: "Designs precis sur tous les formats d'ecran.",
+            description: "Designs précis sur tous les formats d'écran.",
           },
           {
             icon: Sparkles,
             title: "Animations modernes",
-            description: "Des mouvements subtils qui renforcent l'experience utilisateur.",
+            description: "Des mouvements subtils qui renforcent l'expérience utilisateur.",
           },
           {
             icon: Gauge,
             title: "Performance",
-            description: "Sites rapides et optimises pour mieux convertir.",
+            description: "Sites rapides et optimisés pour mieux convertir.",
           },
           {
             icon: Code,
             title: "Code propre",
-            description: "Structure maintenable, evolutive et durable.",
+            description: "Structure maintenable, évolutive et durable.",
           },
         ]
       : [
@@ -90,15 +90,17 @@ const SkillsSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium text-sm tracking-wide uppercase">
-            {language === "fr" ? "EXPERTISE" : "EXPERTISE"}
-          </span>
-          <h2 className={`text-4xl md:text-5xl font-bold mt-4 animated-underline ${isInView ? "in-view" : ""}`}>
-            {language === "fr" ? "Competences & Outils" : "Skills & Tools"}
-          </h2>
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-center gap-3 sm:gap-6">
+            <span className="text-primary font-medium text-sm tracking-wide uppercase shrink-0">
+              {language === "fr" ? "EXPERTISE" : "EXPERTISE"}
+            </span>
+            <h2 className={`text-4xl md:text-5xl font-bold animated-underline ${isInView ? "in-view" : ""}`}>
+              {language === "fr" ? "Compétences & Outils" : "Skills & Tools"}
+            </h2>
+          </div>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
             {language === "fr"
-              ? "Une combinaison de vision creative et de rigueur technique pour livrer des resultats de haut niveau."
+              ? "Une combinaison de vision créative et de rigueur technique pour livrer des résultats de haut niveau."
               : "A combination of creative vision and technical excellence to deliver exceptional results."}
           </p>
         </motion.div>

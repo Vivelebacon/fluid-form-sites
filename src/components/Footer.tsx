@@ -22,12 +22,12 @@ const Footer = () => {
           </div>
 
           <p className="text-sm text-muted-foreground">
-            (c) {new Date().getFullYear()} {language === "fr" ? "Tous droits reserves." : "All rights reserved."}
+            (c) {new Date().getFullYear()} {language === "fr" ? "Tous droits réservés." : "All rights reserved."}
           </p>
 
           <nav className="flex items-center gap-8">
             <a href="#about" className="text-sm text-muted-foreground hover:text-primary transition-colors link-underline">
-              {language === "fr" ? "A propos" : "About"}
+              {language === "fr" ? "À propos" : "About"}
             </a>
             <a href="#portfolio" className="text-sm text-muted-foreground hover:text-primary transition-colors link-underline">
               {language === "fr" ? "Projets" : "Work"}

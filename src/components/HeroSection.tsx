@@ -58,7 +58,7 @@ const HeroSection = () => {
             {language === "fr" ? "Sites Web Modernes" : "Modern Websites"}
             <br />
             <span className="gradient-text">
-              {language === "fr" ? "Concus pour Performer" : "Designed to Perform"}
+              {language === "fr" ? "Conçus pour performer" : "Designed to Perform"}
             </span>
           </motion.h1>
 
@@ -69,7 +69,7 @@ const HeroSection = () => {
             transition={{ delay: 0.5, duration: 0.8 }}
           >
             {language === "fr"
-              ? "Je cree des sites web propres, modernes et performants pour les entreprises qui veulent se demarquer."
+              ? "Je crée des sites web propres, modernes et performants pour les entreprises qui veulent se démarquer."
               : "I design clean, modern, and high-performing websites for businesses that want to stand out."}
           </motion.p>
 

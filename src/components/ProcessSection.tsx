@@ -17,26 +17,26 @@ const ProcessSection = () => {
           {
             number: "01",
             icon: Search,
-            title: "Decouverte",
+            title: "Découverte",
             description: "Comprendre vos objectifs business, votre audience et les besoins du projet.",
           },
           {
             number: "02",
             icon: PenTool,
             title: "Design",
-            description: "Creer des wireframes et une direction visuelle coherente avec votre marque.",
+            description: "Créer des wireframes et une direction visuelle cohérente avec votre marque.",
           },
           {
             number: "03",
             icon: Code,
-            title: "Developpement",
+            title: "Développement",
             description: "Construire des sites responsives, performants et propres techniquement.",
           },
           {
             number: "04",
             icon: Rocket,
             title: "Lancement",
-            description: "Tester, optimiser et mettre en ligne votre nouveau site de facon fluide.",
+            description: "Tester, optimiser et mettre en ligne votre nouveau site de façon fluide.",
           },
         ]
       : [
@@ -77,15 +77,17 @@ const ProcessSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <span className="text-primary font-medium text-sm tracking-wide uppercase">
-            {language === "fr" ? "WORKFLOW" : "WORKFLOW"}
-          </span>
-          <h2 className={`text-4xl md:text-5xl font-bold mt-4 animated-underline ${isInView ? "in-view" : ""}`}>
-            {language === "fr" ? "Mon Processus" : "My Process"}
-          </h2>
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-center gap-3 sm:gap-6">
+            <span className="text-primary font-medium text-sm tracking-wide uppercase shrink-0">
+              {language === "fr" ? "WORKFLOW" : "WORKFLOW"}
+            </span>
+            <h2 className={`text-4xl md:text-5xl font-bold animated-underline ${isInView ? "in-view" : ""}`}>
+              {language === "fr" ? "Mon Processus" : "My Process"}
+            </h2>
+          </div>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
             {language === "fr"
-              ? "Une approche structuree pour garantir un resultat solide a chaque projet."
+              ? "Une approche structurée pour garantir un résultat solide à chaque projet."
               : "A structured approach to ensure every project is delivered with excellence."}
           </p>
         </motion.div>

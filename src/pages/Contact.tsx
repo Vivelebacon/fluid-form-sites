@@ -20,24 +20,24 @@ const createContactSchema = (language: "en" | "fr") =>
       .string()
       .trim()
       .min(1, language === "fr" ? "Le nom est requis" : "Name is required")
-      .max(100, language === "fr" ? "Le nom doit faire moins de 100 caracteres" : "Name must be less than 100 characters"),
+      .max(100, language === "fr" ? "Le nom doit faire moins de 100 caractères" : "Name must be less than 100 characters"),
     email: z
       .string()
       .trim()
       .email(language === "fr" ? "Entrez un email valide" : "Please enter a valid email")
-      .max(255, language === "fr" ? "L'email doit faire moins de 255 caracteres" : "Email must be less than 255 characters"),
+      .max(255, language === "fr" ? "L'email doit faire moins de 255 caractères" : "Email must be less than 255 characters"),
     company: z
       .string()
       .trim()
-      .max(100, language === "fr" ? "Le nom de societe doit faire moins de 100 caracteres" : "Company name must be less than 100 characters")
+      .max(100, language === "fr" ? "Le nom de société doit faire moins de 100 caractères" : "Company name must be less than 100 characters")
       .optional(),
     projectType: z.string().optional(),
     message: z
       .string()
       .trim()
       .min(1, language === "fr" ? "Le message est requis" : "Message is required")
-      .max(2000, language === "fr" ? "Le message doit faire moins de 2000 caracteres" : "Message must be less than 2000 characters"),
-    website: z.string().max(0, language === "fr" ? "Bot detecte" : "Bot detected").optional(),
+      .max(2000, language === "fr" ? "Le message doit faire moins de 2000 caractères" : "Message must be less than 2000 characters"),
+    website: z.string().max(0, language === "fr" ? "Bot détecté" : "Bot detected").optional(),
   });
 
 type ContactFormData = z.infer<ReturnType<typeof createContactSchema>>;
@@ -90,8 +90,8 @@ const Contact = () => {
         body: JSON.stringify({
           name: data.name,
           email: data.email,
-          company: data.company || (language === "fr" ? "Non renseigne" : "Not provided"),
-          projectType: data.projectType || (language === "fr" ? "Non precise" : "Not specified"),
+          company: data.company || (language === "fr" ? "Non renseigné" : "Not provided"),
+          projectType: data.projectType || (language === "fr" ? "Non précisé" : "Not specified"),
           message: data.message,
           _subject: `New inquiry - HugoWebDesign.com - ${data.name}`,
         }),
@@ -125,7 +125,7 @@ const Contact = () => {
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span className="text-sm font-medium">{language === "fr" ? "Retour a l'accueil" : "Back to Home"}</span>
+            <span className="text-sm font-medium">{language === "fr" ? "Retour à l'accueil" : "Back to Home"}</span>
           </Link>
           <LanguageSwitcher />
         </div>
@@ -150,7 +150,7 @@ const Contact = () => {
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed mb-10">
                 {language === "fr"
-                  ? "Pret a donner vie a votre vision ? Parlez-moi de votre projet. Remplissez le formulaire et je vous repondrai sous 24 heures."
+                  ? "Prêt à donner vie à votre vision ? Parlez-moi de votre projet. Remplissez le formulaire et je vous répondrai sous 24 heures."
                   : "Ready to bring your vision to life? I'd love to hear about your project. Fill out the form and I'll get back to you within 24 hours."}
               </p>
 
@@ -185,7 +185,7 @@ const Contact = () => {
                   <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6">
                     <CheckCircle2 className="w-8 h-8 text-green-500" />
                   </div>
-                  <h2 className="text-2xl font-bold mb-3">{language === "fr" ? "Message envoye !" : "Message Sent!"}</h2>
+                  <h2 className="text-2xl font-bold mb-3">{language === "fr" ? "Message envoyé !" : "Message Sent!"}</h2>
                   <p className="text-muted-foreground mb-6">
                     {language === "fr" ? "Merci ! Je reviens vers vous rapidement." : "Thanks! I'll get back to you shortly."}
                   </p>
@@ -207,7 +207,7 @@ const Contact = () => {
                       <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0" />
                       <p className="text-sm text-destructive">
                         {language === "fr"
-                          ? "Une erreur est survenue. Reessayez ou contactez-moi directement par email."
+                          ? "Une erreur est survenue. Réessayez ou contactez-moi directement par email."
                           : "Something went wrong. Please try again or email me directly."}
                       </p>
                     </motion.div>
@@ -252,7 +252,7 @@ const Contact = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="company" className="text-sm font-medium">
-                      {language === "fr" ? "Societe" : "Company"}{" "}
+                      {language === "fr" ? "Société" : "Company"}{" "}
                       <span className="text-muted-foreground text-xs">
                         ({language === "fr" ? "optionnel" : "optional"})
                       </span>
@@ -260,7 +260,7 @@ const Contact = () => {
                     <Input
                       id="company"
                       {...register("company")}
-                      placeholder={language === "fr" ? "Nom de votre societe" : "Your company name"}
+                      placeholder={language === "fr" ? "Nom de votre société" : "Your company name"}
                       className="h-12 rounded-xl bg-background/50 border-border/50 focus:border-primary transition-colors"
                     />
                   </div>
@@ -274,7 +274,7 @@ const Contact = () => {
                     </Label>
                     <Select onValueChange={(value) => setValue("projectType", value)}>
                       <SelectTrigger className="h-12 rounded-xl bg-background/50 border-border/50 focus:border-primary">
-                        <SelectValue placeholder={language === "fr" ? "Selectionnez un type" : "Select a type"} />
+                        <SelectValue placeholder={language === "fr" ? "Sélectionnez un type" : "Select a type"} />
                       </SelectTrigger>
                       <SelectContent>
                         {projectTypes.map((type) => (
@@ -325,7 +325,7 @@ const Contact = () => {
                   </Button>
 
                   <p className="text-xs text-center text-muted-foreground">
-                    {language === "fr" ? "Je reponds en general sous 24 heures." : "I typically respond within 24 hours."}
+                    {language === "fr" ? "Je réponds en général sous 24 heures." : "I typically respond within 24 hours."}
                   </p>
                 </form>
               )}

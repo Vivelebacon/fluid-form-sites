@@ -13,8 +13,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const navLinks = [
-    { label: language === "fr" ? "A propos" : "About", href: "#about" },
-    { label: language === "fr" ? "Competences" : "Skills", href: "#skills" },
+    { label: language === "fr" ? "À propos" : "About", href: "#about" },
+    { label: language === "fr" ? "Compétences" : "Skills", href: "#skills" },
     { label: language === "fr" ? "Projets" : "Work", href: "#portfolio" },
     { label: language === "fr" ? "Processus" : "Process", href: "#process" },
   ];
@@ -50,7 +50,7 @@ const Navbar = () => {
         }`}
       >
         <div className="section-container">
-          <nav className="flex items-center justify-between">
+          <nav className="grid grid-cols-[auto_1fr_auto] items-center gap-4">
             <a
               href="#"
               onClick={(event) => {
@@ -62,24 +62,29 @@ const Navbar = () => {
               Hugo<span className="text-primary">.</span>
             </a>
 
-            <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <button
-                  key={link.label}
-                  onClick={() => scrollToSection(link.href)}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors link-underline"
-                >
-                  {link.label}
-                </button>
-              ))}
-              <LanguageSwitcher />
+            <div className="hidden md:flex items-center justify-self-center">
+              <div className="flex items-center gap-10 lg:gap-12">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.label}
+                    onClick={() => scrollToSection(link.href)}
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors link-underline"
+                  >
+                    {link.label}
+                  </button>
+                ))}
+                <LanguageSwitcher />
+              </div>
+            </div>
+
+            <div className="hidden md:flex justify-self-end">
               <Button onClick={goToContact} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6">
                 Contact
               </Button>
             </div>
 
             <button
-              className="md:hidden p-2"
+              className="md:hidden p-2 justify-self-end"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={language === "fr" ? "Ouvrir le menu" : "Toggle menu"}
             >
