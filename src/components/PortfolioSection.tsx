@@ -4,8 +4,8 @@ import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n";
 import megaAiLogo from "@/assets/mega-ai-logo.png";
-import helionovaLogo from "@/assets/helionova-logo.svg";
-import floMArtisteLogo from "@/assets/flom-artiste-logo.svg";
+import helionovaLogo from "@/assets/helionova-logo.png";
+import floMArtisteLogo from "@/assets/flom-artiste-logo.png";
 
 type Project = {
   title: string;
