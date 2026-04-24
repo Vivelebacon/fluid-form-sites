@@ -19,22 +19,26 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[120vh] md:min-h-[130vh] flex items-center justify-center overflow-hidden animated-gradient">
-      {/* Enhanced parallax gradient orbs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 h-[420px] w-[420px] rounded-full bg-primary/10 blur-[85px]" />
-        <div className="absolute bottom-1/4 right-1/4 h-[320px] w-[320px] rounded-full bg-primary/5 blur-[70px]" />
-        <div className="absolute top-1/2 right-1/3 h-[260px] w-[260px] rounded-full bg-primary/8 blur-[55px]" />
-        <div className="absolute bottom-1/3 left-1/3 h-[220px] w-[220px] rounded-full bg-primary/6 blur-[60px]" />
-      </div>
+    <section className="relative min-h-[120vh] md:min-h-[130vh] flex items-center justify-center overflow-hidden">
+      {/* Hero video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ zIndex: 0 }}
+      >
+        <source src="/hero-hugowebdesign.mp4" type="video/mp4" />
+      </video>
 
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]" />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/55" style={{ zIndex: 1 }} />
 
-      <div className="pointer-events-none absolute inset-x-0 top-8 -bottom-20 z-[6] translate-y-2 md:translate-y-10 bg-gradient-to-b from-primary/5 via-primary/10 to-transparent" />
+      {/* Bottom fade into page */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent via-background/80 to-background" style={{ zIndex: 2 }} />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-56 bg-gradient-to-b from-transparent via-background/80 to-background" />
-
-      <div className="relative z-20 section-container text-center">
+      <div className="relative section-container text-center" style={{ zIndex: 3 }}>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
