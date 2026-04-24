@@ -7,7 +7,6 @@ import megaAiLogo from "@/assets/mega-ai-logo.png";
 import helionovaLogo from "@/assets/helionova-logo.png";
 import floMArtisteLogo from "@/assets/flom-artiste-logo.png";
 import cblisLogo from "@/assets/cblis-logo.png";
-import ybgLogo from "@/assets/ybg-logo.png";
 
 type Project = {
   title: string;
@@ -15,7 +14,7 @@ type Project = {
   link: string;
   tags: string[];
   featured?: boolean;
-  logo: string;
+  logo?: string;
   heroVideo?: string;
 };
 
@@ -46,7 +45,6 @@ const PortfolioSection = () => {
             link: "https://helionovaenergie.vercel.app/",
             tags: ["Template", "Solaire", "Landing page"],
             logo: helionovaLogo,
-            heroVideo: "/hero-helionova.mp4",
           },
           {
             title: "Flo-M Artiste",
@@ -72,7 +70,6 @@ const PortfolioSection = () => {
               "Site touristique offrant des expériences de vacances haut de gamme à Bali. Design moderne optimisé pour les conversions de réservations.",
             link: "https://www.yourbaligetaway.com/",
             tags: ["Web Design", "Tourisme", "E-commerce"],
-            logo: ybgLogo,
             heroVideo: "/hero-ybg.mp4",
           },
         ]
@@ -93,7 +90,6 @@ const PortfolioSection = () => {
             link: "https://helionovaenergie.vercel.app/",
             tags: ["Template", "Solar", "Landing Page"],
             logo: helionovaLogo,
-            heroVideo: "/hero-helionova.mp4",
           },
           {
             title: "Flo-M Artiste",
@@ -119,7 +115,6 @@ const PortfolioSection = () => {
               "Hospitality and travel website offering premium Bali vacation experiences. Modern design optimized for tourism and booking conversions.",
             link: "https://www.yourbaligetaway.com/",
             tags: ["Web Design", "Travel", "E-commerce"],
-            logo: ybgLogo,
             heroVideo: "/hero-ybg.mp4",
           },
         ];
@@ -161,9 +156,9 @@ const PortfolioSection = () => {
               }}
               className="group relative"
             >
-              <div className="relative glass-card rounded-2xl overflow-hidden portfolio-shine hover-lift card-shine">
+              <div className="relative rounded-2xl overflow-hidden portfolio-shine hover-lift card-shine" style={{ minHeight: "280px" }}>
                 {/* Hero video background */}
-                {project.heroVideo && (
+                {project.heroVideo ? (
                   <video
                     autoPlay
                     muted
@@ -174,18 +169,40 @@ const PortfolioSection = () => {
                   >
                     <source src={project.heroVideo} type="video/mp4" />
                   </video>
+                ) : (
+                  <div className="absolute inset-0 glass-card" style={{ zIndex: 0 }} />
                 )}
-                {/* Dark overlay for text readability */}
-                {project.heroVideo && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-black/50" style={{ zIndex: 1 }} />
-                )}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
 
-                <div className="p-8 md:p-12 relative z-10">
+                {/* Dark gradient overlay for readability */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    zIndex: 1,
+                    background: project.heroVideo
+                      ? "linear-gradient(to right, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.65) 50%, rgba(0,0,0,0.30) 100%)"
+                      : "transparent",
+                  }}
+                />
+
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/50 to-transparent" style={{ zIndex: 2 }} />
+
+                {/* Content */}
+                <div className="relative p-8 md:p-12" style={{ zIndex: 3 }}>
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="flex h-16 min-w-[168px] items-center justify-center overflow-hidden rounded-xl px-0 py-0">
-                      <img src={project.logo} alt={`${project.title} logo`} className="h-full w-full object-contain" />
-                    </div>
+                    {project.logo && (
+                      <div className="flex h-16 min-w-[168px] items-center justify-start overflow-hidden rounded-xl">
+                        <img
+                          src={project.logo}
+                          alt={`${project.title} logo`}
+                          className="h-full w-auto max-w-[168px] object-contain"
+                          style={project.heroVideo ? { filter: "brightness(0) invert(1)" } : {}}
+                        />
+                      </div>
+                    )}
+                    {!project.logo && (
+                      <span className="text-2xl font-bold text-white">{project.title}</span>
+                    )}
                     {project.featured && (
                       <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -201,17 +218,33 @@ const PortfolioSection = () => {
                     )}
                   </div>
 
-                  <h3 className="text-3xl md:text-4xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">
-                    {project.title}
-                  </h3>
+                  {project.logo && (
+                    <h3
+                      className="text-3xl md:text-4xl font-bold mb-4 transition-colors duration-300"
+                      style={{ color: project.heroVideo ? "white" : undefined }}
+                    >
+                      {project.title}
+                    </h3>
+                  )}
 
-                  <p className="text-lg text-muted-foreground mb-8 max-w-2xl leading-relaxed">
+                  <p
+                    className="text-lg mb-8 max-w-2xl leading-relaxed"
+                    style={{ color: project.heroVideo ? "rgba(255,255,255,0.85)" : undefined }}
+                  >
                     {project.description}
                   </p>
 
                   <div className="flex flex-wrap gap-3 mb-8">
                     {project.tags.map((tag) => (
-                      <span key={tag} className="px-4 py-2 rounded-full text-sm font-medium bg-muted text-muted-foreground">
+                      <span
+                        key={tag}
+                        className="px-4 py-2 rounded-full text-sm font-medium"
+                        style={
+                          project.heroVideo
+                            ? { background: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,255,255,0.2)" }
+                            : { background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }
+                        }
+                      >
                         {tag}
                       </span>
                     ))}
@@ -230,7 +263,7 @@ const PortfolioSection = () => {
                   </a>
                 </div>
 
-                <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-[100px]" />
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-[100px]" style={{ zIndex: 2 }} />
               </div>
 
               <div className="absolute inset-0 -z-10 bg-primary/20 blur-3xl rounded-3xl opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
