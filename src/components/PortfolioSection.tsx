@@ -7,6 +7,7 @@ import megaAiLogo from "@/assets/mega-ai-logo.png";
 import helionovaLogo from "@/assets/helionova-logo.png";
 import floMArtisteLogo from "@/assets/flom-artiste-logo.png";
 import cblisLogo from "@/assets/cblis-logo.png";
+import ybgLogo from "@/assets/ybg-logo.jpeg";
 
 type Project = {
   title: string;
@@ -37,23 +38,7 @@ const PortfolioSection = () => {
             tags: ["Web Design", "Corporate", "UI moderne"],
             featured: true,
             logo: megaAiLogo,
-          },
-          {
-            title: "HelioNova Energie",
-            description:
-              "Template pour entreprises solaires, pensé pour rassurer, convertir et valoriser une offre énergie propre.",
-            link: "https://helionovaenergie.vercel.app/",
-            tags: ["Template", "Solaire", "Landing page"],
-            logo: helionovaLogo,
-          },
-          {
-            title: "Flo-M Artiste",
-            description:
-              "Landing page d'artiste avec une présentation immersive, idéale pour mettre en avant l'univers, le style et l'image de marque.",
-            link: "https://flomartiste.vercel.app/",
-            tags: ["Artiste", "Landing page", "Branding"],
-            logo: floMArtisteLogo,
-            heroVideo: "/hero-flom.mp4",
+            heroVideo: "/hero-megaai.mp4",
           },
           {
             title: "CBLIS",
@@ -70,7 +55,26 @@ const PortfolioSection = () => {
               "Site touristique offrant des expériences de vacances haut de gamme à Bali. Design moderne optimisé pour les conversions de réservations.",
             link: "https://www.yourbaligetaway.com/",
             tags: ["Web Design", "Tourisme", "E-commerce"],
+            logo: ybgLogo,
             heroVideo: "/hero-ybg.mp4",
+          },
+          {
+            title: "Flo-M Artiste",
+            description:
+              "Landing page d'artiste avec une présentation immersive, idéale pour mettre en avant l'univers, le style et l'image de marque.",
+            link: "https://flomartiste.vercel.app/",
+            tags: ["Artiste", "Landing page", "Branding"],
+            logo: floMArtisteLogo,
+            heroVideo: "/hero-flom.mp4",
+          },
+          {
+            title: "HelioNova Energie",
+            description:
+              "Template pour entreprises solaires, pensé pour rassurer, convertir et valoriser une offre énergie propre.",
+            link: "https://helionovaenergie.vercel.app/",
+            tags: ["Template", "Solaire", "Landing page"],
+            logo: helionovaLogo,
+            heroVideo: "/hero-helionova.mp4",
           },
         ]
       : [
@@ -82,23 +86,7 @@ const PortfolioSection = () => {
             tags: ["Web Design", "Corporate", "Modern UI"],
             featured: true,
             logo: megaAiLogo,
-          },
-          {
-            title: "HelioNova Energie",
-            description:
-              "Template website for solar companies focused on trust, lead generation, and a clean energy visual identity.",
-            link: "https://helionovaenergie.vercel.app/",
-            tags: ["Template", "Solar", "Landing Page"],
-            logo: helionovaLogo,
-          },
-          {
-            title: "Flo-M Artiste",
-            description:
-              "Artist landing page built to showcase personality, atmosphere, and a strong visual presence.",
-            link: "https://flomartiste.vercel.app/",
-            tags: ["Artist", "Landing Page", "Branding"],
-            logo: floMArtisteLogo,
-            heroVideo: "/hero-flom.mp4",
+            heroVideo: "/hero-megaai.mp4",
           },
           {
             title: "CBLIS",
@@ -115,7 +103,26 @@ const PortfolioSection = () => {
               "Hospitality and travel website offering premium Bali vacation experiences. Modern design optimized for tourism and booking conversions.",
             link: "https://www.yourbaligetaway.com/",
             tags: ["Web Design", "Travel", "E-commerce"],
+            logo: ybgLogo,
             heroVideo: "/hero-ybg.mp4",
+          },
+          {
+            title: "Flo-M Artiste",
+            description:
+              "Artist landing page built to showcase personality, atmosphere, and a strong visual presence.",
+            link: "https://flomartiste.vercel.app/",
+            tags: ["Artist", "Landing Page", "Branding"],
+            logo: floMArtisteLogo,
+            heroVideo: "/hero-flom.mp4",
+          },
+          {
+            title: "HelioNova Energie",
+            description:
+              "Template website for solar companies focused on trust, lead generation, and a clean energy visual identity.",
+            link: "https://helionovaenergie.vercel.app/",
+            tags: ["Template", "Solar", "Landing Page"],
+            logo: helionovaLogo,
+            heroVideo: "/hero-helionova.mp4",
           },
         ];
 
@@ -158,29 +165,23 @@ const PortfolioSection = () => {
             >
               <div className="relative rounded-2xl overflow-hidden portfolio-shine hover-lift card-shine" style={{ minHeight: "280px" }}>
                 {/* Hero video background */}
-                {project.heroVideo ? (
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{ zIndex: 0 }}
-                  >
-                    <source src={project.heroVideo} type="video/mp4" />
-                  </video>
-                ) : (
-                  <div className="absolute inset-0 glass-card" style={{ zIndex: 0 }} />
-                )}
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ zIndex: 0 }}
+                >
+                  <source src={project.heroVideo} type="video/mp4" />
+                </video>
 
-                {/* Dark gradient overlay for readability */}
+                {/* Dark gradient overlay */}
                 <div
                   className="absolute inset-0"
                   style={{
                     zIndex: 1,
-                    background: project.heroVideo
-                      ? "linear-gradient(to right, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.65) 50%, rgba(0,0,0,0.30) 100%)"
-                      : "transparent",
+                    background: "linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.65) 50%, rgba(0,0,0,0.30) 100%)",
                   }}
                 />
 
@@ -190,17 +191,16 @@ const PortfolioSection = () => {
                 {/* Content */}
                 <div className="relative p-8 md:p-12" style={{ zIndex: 3 }}>
                   <div className="flex items-center gap-4 mb-6">
-                    {project.logo && (
+                    {project.logo ? (
                       <div className="flex h-16 min-w-[168px] items-center justify-start overflow-hidden rounded-xl">
                         <img
                           src={project.logo}
                           alt={`${project.title} logo`}
                           className="h-full w-auto max-w-[168px] object-contain"
-                          style={project.heroVideo ? { filter: "brightness(0) invert(1)" } : {}}
+                          style={{ filter: "brightness(0) invert(1)" }}
                         />
                       </div>
-                    )}
-                    {!project.logo && (
+                    ) : (
                       <span className="text-2xl font-bold text-white">{project.title}</span>
                     )}
                     {project.featured && (
@@ -218,19 +218,11 @@ const PortfolioSection = () => {
                     )}
                   </div>
 
-                  {project.logo && (
-                    <h3
-                      className="text-3xl md:text-4xl font-bold mb-4 transition-colors duration-300"
-                      style={{ color: project.heroVideo ? "white" : undefined }}
-                    >
-                      {project.title}
-                    </h3>
-                  )}
+                  <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white transition-colors duration-300">
+                    {project.title}
+                  </h3>
 
-                  <p
-                    className="text-lg mb-8 max-w-2xl leading-relaxed"
-                    style={{ color: project.heroVideo ? "rgba(255,255,255,0.85)" : undefined }}
-                  >
+                  <p className="text-lg mb-8 max-w-2xl leading-relaxed text-white/85">
                     {project.description}
                   </p>
 
@@ -239,11 +231,7 @@ const PortfolioSection = () => {
                       <span
                         key={tag}
                         className="px-4 py-2 rounded-full text-sm font-medium"
-                        style={
-                          project.heroVideo
-                            ? { background: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,255,255,0.2)" }
-                            : { background: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))" }
-                        }
+                        style={{ background: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,255,255,0.2)" }}
                       >
                         {tag}
                       </span>
