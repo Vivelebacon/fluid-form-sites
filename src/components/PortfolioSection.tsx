@@ -16,6 +16,7 @@ type Project = {
   tags: string[];
   featured?: boolean;
   logo: string;
+  heroVideo?: string;
 };
 
 const PortfolioSection = () => {
@@ -45,6 +46,7 @@ const PortfolioSection = () => {
             link: "https://helionovaenergie.vercel.app/",
             tags: ["Template", "Solaire", "Landing page"],
             logo: helionovaLogo,
+            heroVideo: "/hero-helionova.mp4",
           },
           {
             title: "Flo-M Artiste",
@@ -53,6 +55,7 @@ const PortfolioSection = () => {
             link: "https://flomartiste.vercel.app/",
             tags: ["Artiste", "Landing page", "Branding"],
             logo: floMArtisteLogo,
+            heroVideo: "/hero-flom.mp4",
           },
           {
             title: "CBLIS",
@@ -61,6 +64,7 @@ const PortfolioSection = () => {
             link: "https://www.cblis.com/",
             tags: ["Web Design", "Santé", "Enterprise"],
             logo: cblisLogo,
+            heroVideo: "/hero-cblis.mp4",
           },
           {
             title: "Your Bali Getaway",
@@ -69,6 +73,7 @@ const PortfolioSection = () => {
             link: "https://www.yourbaligetaway.com/",
             tags: ["Web Design", "Tourisme", "E-commerce"],
             logo: ybgLogo,
+            heroVideo: "/hero-ybg.mp4",
           },
         ]
       : [
@@ -88,6 +93,7 @@ const PortfolioSection = () => {
             link: "https://helionovaenergie.vercel.app/",
             tags: ["Template", "Solar", "Landing Page"],
             logo: helionovaLogo,
+            heroVideo: "/hero-helionova.mp4",
           },
           {
             title: "Flo-M Artiste",
@@ -96,6 +102,7 @@ const PortfolioSection = () => {
             link: "https://flomartiste.vercel.app/",
             tags: ["Artist", "Landing Page", "Branding"],
             logo: floMArtisteLogo,
+            heroVideo: "/hero-flom.mp4",
           },
           {
             title: "CBLIS",
@@ -104,6 +111,7 @@ const PortfolioSection = () => {
             link: "https://www.cblis.com/",
             tags: ["Web Design", "Healthcare", "Enterprise"],
             logo: cblisLogo,
+            heroVideo: "/hero-cblis.mp4",
           },
           {
             title: "Your Bali Getaway",
@@ -112,6 +120,7 @@ const PortfolioSection = () => {
             link: "https://www.yourbaligetaway.com/",
             tags: ["Web Design", "Travel", "E-commerce"],
             logo: ybgLogo,
+            heroVideo: "/hero-ybg.mp4",
           },
         ];
 
@@ -153,9 +162,26 @@ const PortfolioSection = () => {
               className="group relative"
             >
               <div className="relative glass-card rounded-2xl overflow-hidden portfolio-shine hover-lift card-shine">
+                {/* Hero video background */}
+                {project.heroVideo && (
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ zIndex: 0 }}
+                  >
+                    <source src={project.heroVideo} type="video/mp4" />
+                  </video>
+                )}
+                {/* Dark overlay for text readability */}
+                {project.heroVideo && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-black/50" style={{ zIndex: 1 }} />
+                )}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
 
-                <div className="p-8 md:p-12">
+                <div className="p-8 md:p-12 relative z-10">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="flex h-16 min-w-[168px] items-center justify-center overflow-hidden rounded-xl px-0 py-0">
                       <img src={project.logo} alt={`${project.title} logo`} className="h-full w-full object-contain" />
