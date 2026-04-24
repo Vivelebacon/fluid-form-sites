@@ -3,9 +3,9 @@ import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n";
-import megaAiLogo from "@/assets/mega-ai-logo.png";
-import helionovaLogo from "@/assets/helionova-logo.png";
-import floMArtisteLogo from "@/assets/flom-artiste-logo.png";
+import megaAiLogo from "@/assets/mega-ai-logo.svg";
+import helionovaLogo from "@/assets/helionova-logo.svg";
+import floMArtisteLogo from "@/assets/flom-artiste-logo.svg";
 import cblisLogo from "@/assets/cblis-logo.png";
 import ybgLogo from "@/assets/ybg-logo.jpeg";
 
@@ -192,13 +192,12 @@ const PortfolioSection = () => {
                 <div className="relative p-8 md:p-12" style={{ zIndex: 3 }}>
                   <div className="flex items-center gap-4 mb-6">
                     {project.logo ? (
-                      <div className="flex h-14 items-center justify-start overflow-hidden rounded-xl bg-white/90 px-3 py-2">
-                        <img
-                          src={project.logo}
-                          alt={`${project.title} logo`}
-                          className="h-full w-auto max-w-[160px] object-contain"
-                        />
-                      </div>
+                      <img
+                        src={project.logo}
+                        alt={`${project.title} logo`}
+                        className="h-14 w-auto max-w-[200px] object-contain"
+                        style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.5))" }}
+                      />
                     ) : (
                       <span className="text-2xl font-bold text-white">{project.title}</span>
                     )}
