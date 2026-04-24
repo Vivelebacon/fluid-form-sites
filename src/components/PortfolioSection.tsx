@@ -192,12 +192,11 @@ const PortfolioSection = () => {
                 <div className="relative p-8 md:p-12" style={{ zIndex: 3 }}>
                   <div className="flex items-center gap-4 mb-6">
                     {project.logo ? (
-                      <div className="flex h-16 min-w-[168px] items-center justify-start overflow-hidden rounded-xl">
+                      <div className="flex h-14 items-center justify-start overflow-hidden rounded-xl bg-white/90 px-3 py-2">
                         <img
                           src={project.logo}
                           alt={`${project.title} logo`}
-                          className="h-full w-auto max-w-[168px] object-contain"
-                          style={{ filter: "brightness(0) invert(1)" }}
+                          className="h-full w-auto max-w-[160px] object-contain"
                         />
                       </div>
                     ) : (
