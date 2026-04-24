@@ -6,6 +6,8 @@ import { useLanguage } from "@/i18n";
 import megaAiLogo from "@/assets/mega-ai-logo.png";
 import helionovaLogo from "@/assets/helionova-logo.png";
 import floMArtisteLogo from "@/assets/flom-artiste-logo.png";
+import cblisLogo from "@/assets/cblis-logo.png";
+import ybgLogo from "@/assets/ybg-logo.png";
 
 type Project = {
   title: string;
@@ -52,6 +54,22 @@ const PortfolioSection = () => {
             tags: ["Artiste", "Landing page", "Branding"],
             logo: floMArtisteLogo,
           },
+          {
+            title: "CBLIS",
+            description:
+              "Plateforme professionnelle pour la gestion des informations de laboratoire et des échantillons. Conçue pour les professionnels de la santé avec une intégration fluide des flux de travail.",
+            link: "https://www.cblis.com/",
+            tags: ["Web Design", "Santé", "Enterprise"],
+            logo: cblisLogo,
+          },
+          {
+            title: "Your Bali Getaway",
+            description:
+              "Site touristique offrant des expériences de vacances haut de gamme à Bali. Design moderne optimisé pour les conversions de réservations.",
+            link: "https://www.yourbaligetaway.com/",
+            tags: ["Web Design", "Tourisme", "E-commerce"],
+            logo: ybgLogo,
+          },
         ]
       : [
           {
@@ -78,6 +96,22 @@ const PortfolioSection = () => {
             link: "https://flomartiste.vercel.app/",
             tags: ["Artist", "Landing Page", "Branding"],
             logo: floMArtisteLogo,
+          },
+          {
+            title: "CBLIS",
+            description:
+              "Professional platform for laboratory information and sample management. Designed with healthcare professionals in mind for seamless workflow integration.",
+            link: "https://www.cblis.com/",
+            tags: ["Web Design", "Healthcare", "Enterprise"],
+            logo: cblisLogo,
+          },
+          {
+            title: "Your Bali Getaway",
+            description:
+              "Hospitality and travel website offering premium Bali vacation experiences. Modern design optimized for tourism and booking conversions.",
+            link: "https://www.yourbaligetaway.com/",
+            tags: ["Web Design", "Travel", "E-commerce"],
+            logo: ybgLogo,
           },
         ];
 
