@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n";
 import megaAiLogo from "@/assets/mega-ai-logo.svg";
 import helionovaLogo from "@/assets/helionova-logo.png";
-import floMArtisteLogo from "@/assets/flom-artiste-logo.svg";
 import cblisLogo from "@/assets/cblis-logo.png";
 import ybgLogo from "@/assets/ybg-logo.jpeg";
 import in2dutchLogo from "@/assets/in2dutch-logo.svg";
@@ -61,15 +60,6 @@ const PortfolioSection = () => {
             tags: ["Web Design", "Tourisme", "E-commerce"],
             logo: ybgLogo,
             heroVideo: "/hero-ybg.mp4",
-          },
-          {
-            title: "Flo-M Artiste",
-            description:
-              "Landing page d'artiste avec une présentation immersive, idéale pour mettre en avant l'univers, le style et l'image de marque.",
-            link: "https://flomartiste.vercel.app/",
-            tags: ["Artiste", "Landing page", "Branding"],
-            logo: floMArtisteLogo,
-            heroVideo: "/hero-flom.mp4",
           },
           {
             title: "HelioNova Energie",
@@ -128,15 +118,6 @@ const PortfolioSection = () => {
             tags: ["Web Design", "Travel", "E-commerce"],
             logo: ybgLogo,
             heroVideo: "/hero-ybg.mp4",
-          },
-          {
-            title: "Flo-M Artiste",
-            description:
-              "Artist landing page built to showcase personality, atmosphere, and a strong visual presence.",
-            link: "https://flomartiste.vercel.app/",
-            tags: ["Artist", "Landing Page", "Branding"],
-            logo: floMArtisteLogo,
-            heroVideo: "/hero-flom.mp4",
           },
           {
             title: "HelioNova Energie",
