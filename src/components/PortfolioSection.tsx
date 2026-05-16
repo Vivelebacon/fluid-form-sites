@@ -8,6 +8,8 @@ import helionovaLogo from "@/assets/helionova-logo.png";
 import floMArtisteLogo from "@/assets/flom-artiste-logo.svg";
 import cblisLogo from "@/assets/cblis-logo.png";
 import ybgLogo from "@/assets/ybg-logo.jpeg";
+import in2dutchLogo from "@/assets/in2dutch-logo.svg";
+import cbtLogo from "@/assets/cbt-logo.jpg";
 
 type Project = {
   title: string;
@@ -16,7 +18,9 @@ type Project = {
   tags: string[];
   featured?: boolean;
   logo?: string;
+  logoWhiteBg?: boolean;
   heroVideo?: string;
+  heroImage?: string;
 };
 
 const PortfolioSection = () => {
@@ -76,6 +80,25 @@ const PortfolioSection = () => {
             logo: helionovaLogo,
             heroVideo: "/hero-helionova.mp4",
           },
+          {
+            title: "In2Dutch",
+            description:
+              "Site vitrine pour une agence de traduction néerlandaise. Design épuré, orienté conversion, avec une identité visuelle forte et moderne.",
+            link: "https://in2dutch.com/",
+            tags: ["Web Design", "Traduction", "Landing page"],
+            logo: in2dutchLogo,
+            heroVideo: "/hero-in2dutch.mp4",
+          },
+          {
+            title: "Cross Border Translation",
+            description:
+              "Site corporate pour une agence de traduction internationale. Conçu pour inspirer confiance et valoriser une expertise multilingue de haut niveau.",
+            link: "https://www.crossbordertranslation.com/",
+            tags: ["Web Design", "Corporate", "Traduction"],
+            logo: cbtLogo,
+            logoWhiteBg: true,
+            heroImage: "/hero-cbt.png",
+          },
         ]
       : [
           {
@@ -124,6 +147,25 @@ const PortfolioSection = () => {
             logo: helionovaLogo,
             heroVideo: "/hero-helionova.mp4",
           },
+          {
+            title: "In2Dutch",
+            description:
+              "Showcase website for a Dutch translation agency. Clean, conversion-focused design with a strong and modern visual identity.",
+            link: "https://in2dutch.com/",
+            tags: ["Web Design", "Translation", "Landing Page"],
+            logo: in2dutchLogo,
+            heroVideo: "/hero-in2dutch.mp4",
+          },
+          {
+            title: "Cross Border Translation",
+            description:
+              "Corporate website for an international translation agency. Built to inspire trust and highlight high-level multilingual expertise.",
+            link: "https://www.crossbordertranslation.com/",
+            tags: ["Web Design", "Corporate", "Translation"],
+            logo: cbtLogo,
+            logoWhiteBg: true,
+            heroImage: "/hero-cbt.png",
+          },
         ];
 
   return (
@@ -164,17 +206,27 @@ const PortfolioSection = () => {
               className="group relative"
             >
               <div className="relative rounded-2xl overflow-hidden portfolio-shine hover-lift card-shine" style={{ minHeight: "280px" }}>
-                {/* Hero video background */}
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
-                  style={{ zIndex: 0 }}
-                >
-                  <source src={project.heroVideo} type="video/mp4" />
-                </video>
+                {/* Hero background */}
+                {project.heroVideo ? (
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ zIndex: 0 }}
+                  >
+                    <source src={project.heroVideo} type="video/mp4" />
+                  </video>
+                ) : project.heroImage ? (
+                  <img
+                    src={project.heroImage}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ zIndex: 0 }}
+                  />
+                ) : null}
 
                 {/* Dark gradient overlay */}
                 <div
@@ -195,8 +247,12 @@ const PortfolioSection = () => {
                       <img
                         src={project.logo}
                         alt={`${project.title} logo`}
-                        className="h-14 w-auto max-w-[200px] object-contain"
-                        style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.5))" }}
+                        className="h-14 w-auto max-w-[200px] object-contain rounded-lg"
+                        style={
+                          project.logoWhiteBg
+                            ? { background: "rgba(255,255,255,0.92)", padding: "6px 12px", borderRadius: 10 }
+                            : { filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.5))" }
+                        }
                       />
                     ) : (
                       <span className="text-2xl font-bold text-white">{project.title}</span>
