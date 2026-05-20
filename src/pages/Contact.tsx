@@ -159,13 +159,13 @@ const Contact = () => {
                   {language === "fr" ? "Contact direct" : "Direct Contact"}
                 </h3>
                 <a
-                  href="mailto:hugomegardon.pro@gmail.com"
+                  href="mailto:contact@hugowebdesign.com"
                   className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group"
                 >
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <Mail className="w-4 h-4 text-primary" />
                   </div>
-                  <span className="text-sm">hugomegardon.pro@gmail.com</span>
+                  <span className="text-sm">contact@hugowebdesign.com</span>
                 </a>
               </div>
             </motion.div>
