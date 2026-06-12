@@ -1,15 +1,13 @@
-import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Search, PenTool, Code, Rocket } from "lucide-react";
 import { useLanguage } from "@/i18n";
+import { gsap, useGSAP } from "@/lib/gsap";
+import SectionHeading from "@/components/SectionHeading";
 
 const ProcessSection = () => {
-  const ref = useRef(null);
   const { language } = useLanguage();
-  const isInView = useInView(ref, {
-    once: true,
-    margin: "-100px",
-  });
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   const steps =
     language === "fr"
@@ -66,76 +64,107 @@ const ProcessSection = () => {
           },
         ];
 
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      // Desktop: pin the section and scrub the track horizontally
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+        const track = trackRef.current;
+        if (!track) return;
+        const distance = () => track.scrollWidth - window.innerWidth;
+
+        gsap.to(track, {
+          x: () => -distance(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: () => "+=" + distance(),
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        gsap.to(".process-progress", {
+          scaleX: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: () => "+=" + distance(),
+            scrub: true,
+          },
+        });
+      });
+
+      // Mobile / reduced motion: simple staggered reveal
+      mm.add("(max-width: 1023px) and (prefers-reduced-motion: no-preference)", () => {
+        gsap.from(".process-panel", {
+          autoAlpha: 0,
+          y: 44,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: { trigger: trackRef.current, start: "top 82%", once: true },
+        });
+      });
+
+      return () => mm.revert();
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section className="py-32 relative overflow-hidden bg-muted/30">
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-primary/5 blur-3xl rounded-full -translate-y-1/2" />
+    <section ref={sectionRef} className="relative overflow-hidden bg-card/40">
+      <div className="flex flex-col py-28 md:py-36 lg:h-screen lg:justify-center lg:py-0">
+        <div className="section-container w-full">
+          <SectionHeading
+            index="04"
+            label="WORKFLOW"
+            title={language === "fr" ? "Mon Processus" : "My Process"}
+            description={
+              language === "fr"
+                ? "Une approche structurée pour garantir un résultat solide à chaque projet."
+                : "A structured approach to ensure every project is delivered with excellence."
+            }
+          />
+        </div>
 
-      <div ref={ref} className="section-container relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+        <div
+          ref={trackRef}
+          className="mt-14 flex flex-col gap-8 px-6 lg:mt-20 lg:w-max lg:flex-row lg:gap-10 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+2rem))] lg:pr-[12vw]"
         >
-          <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-center gap-3 sm:gap-6">
-            <span className="text-primary font-medium text-sm tracking-wide uppercase shrink-0">
-              {language === "fr" ? "WORKFLOW" : "WORKFLOW"}
-            </span>
-            <h2 className={`text-4xl md:text-5xl font-bold animated-underline ${isInView ? "in-view" : ""}`}>
-              {language === "fr" ? "Mon Processus" : "My Process"}
-            </h2>
-          </div>
-          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            {language === "fr"
-              ? "Une approche structurée pour garantir un résultat solide à chaque projet."
-              : "A structured approach to ensure every project is delivered with excellence."}
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-          <div className="hidden lg:block absolute top-24 left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-
-          {steps.map((step, index) => (
-            <motion.div
+          {steps.map((step) => (
+            <div
               key={step.number}
-              initial={{ opacity: 0, y: 40, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
-              className="relative group"
+              data-cursor-hover
+              className="process-panel group relative shrink-0 overflow-hidden rounded-3xl border border-white/5 bg-card p-8 transition-colors duration-300 hover:border-primary/30 md:p-12 lg:w-[30rem]"
             >
-              <div className="text-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={isInView ? { scale: 1 } : {}}
-                  transition={{ delay: 0.3 + index * 0.15, duration: 0.4, type: "spring" }}
-                  className="relative inline-flex items-center justify-center mb-6"
-                >
-                  <div className="absolute inset-0 w-20 h-20 rounded-full bg-primary/20 group-hover:bg-primary/30 transition-all duration-300 group-hover:scale-110" />
+              <span className="text-ghost pointer-events-none absolute -right-2 -top-6 select-none font-display text-[7rem] font-black leading-none transition-all duration-500 group-hover:-translate-y-1 md:text-[9rem]">
+                {step.number}
+              </span>
 
-                  <div className="relative w-20 h-20 rounded-full bg-card border border-border flex items-center justify-center group-hover:border-primary/50 transition-all duration-300">
-                    <step.icon className="w-8 h-8 text-primary" />
-                  </div>
+              <div className="relative">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-colors duration-300 group-hover:bg-primary/20">
+                  <step.icon className="h-8 w-8 text-primary" />
+                </div>
 
-                  <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">
-                    {step.number}
-                  </span>
-                </motion.div>
-
-                <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                <h3 className="mt-8 font-display text-2xl font-bold transition-colors group-hover:text-primary md:text-3xl">
                   {step.title}
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mx-auto">
-                  {step.description}
-                </p>
+                <p className="mt-4 max-w-sm leading-relaxed text-muted-foreground">{step.description}</p>
               </div>
-
-              {index < steps.length - 1 && (
-                <div className="lg:hidden flex justify-center my-6">
-                  <div className="w-0.5 h-8 bg-gradient-to-b from-primary/30 to-transparent" />
-                </div>
-              )}
-            </motion.div>
+            </div>
           ))}
+        </div>
+
+        <div className="section-container mt-12 hidden w-full lg:block">
+          <div className="h-px w-full overflow-hidden bg-border">
+            <div className="process-progress h-full w-full origin-left scale-x-0 bg-primary" />
+          </div>
         </div>
       </div>
     </section>

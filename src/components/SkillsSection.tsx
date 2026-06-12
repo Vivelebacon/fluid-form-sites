@@ -1,15 +1,12 @@
-import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Palette, Layout, Smartphone, Sparkles, Gauge, Code } from "lucide-react";
 import { useLanguage } from "@/i18n";
+import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import SectionHeading from "@/components/SectionHeading";
 
 const SkillsSection = () => {
-  const ref = useRef(null);
   const { language } = useLanguage();
-  const isInView = useInView(ref, {
-    once: true,
-    margin: "-100px",
-  });
+  const sectionRef = useRef<HTMLElement>(null);
 
   const skills =
     language === "fr"
@@ -78,55 +75,59 @@ const SkillsSection = () => {
           },
         ];
 
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      gsap.from(".skill-item", {
+        autoAlpha: 0,
+        y: 48,
+        duration: 0.8,
+        stagger: 0.09,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".skill-grid", start: "top 80%", once: true },
+      });
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section className="py-32 relative overflow-hidden bg-muted/30">
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 blur-3xl rounded-full -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-primary/5 blur-3xl rounded-full" />
+    <section ref={sectionRef} className="relative overflow-hidden bg-card/40 py-28 md:py-36">
+      <div className="pointer-events-none absolute left-0 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl" />
+      <span className="text-ghost pointer-events-none absolute -left-4 top-12 hidden select-none font-display text-[12rem] font-black leading-none lg:block">
+        02
+      </span>
 
-      <div ref={ref} className="section-container relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-center gap-3 sm:gap-6">
-            <span className="text-primary font-medium text-sm tracking-wide uppercase shrink-0">
-              {language === "fr" ? "EXPERTISE" : "EXPERTISE"}
-            </span>
-            <h2 className={`text-4xl md:text-5xl font-bold animated-underline ${isInView ? "in-view" : ""}`}>
-              {language === "fr" ? "Compétences & Outils" : "Skills & Tools"}
-            </h2>
-          </div>
-          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            {language === "fr"
+      <div className="section-container relative z-10">
+        <SectionHeading
+          index="02"
+          label="EXPERTISE"
+          align="center"
+          title={language === "fr" ? "Compétences & Outils" : "Skills & Tools"}
+          description={
+            language === "fr"
               ? "Une combinaison de vision créative et de rigueur technique pour livrer des résultats de haut niveau."
-              : "A combination of creative vision and technical excellence to deliver exceptional results."}
-          </p>
-        </motion.div>
+              : "A combination of creative vision and technical excellence to deliver exceptional results."
+          }
+        />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skills.map((skill, index) => (
-            <motion.div
+        <div className="skill-grid mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {skills.map((skill) => (
+            <div
               key={skill.title}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="group skill-card card-shine p-8 hover-lift cursor-default"
+              data-cursor-hover
+              className="skill-item group relative overflow-hidden rounded-xl border border-white/5 bg-card p-8 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-[0_20px_40px_-15px_hsl(181_90%_52%/0.15)]"
             >
-              <div className="relative">
-                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                  <skill.icon className="w-8 h-8 text-primary" />
-                </div>
-
-                <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                  {skill.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">{skill.description}</p>
-
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-500" />
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20">
+                <skill.icon className="h-7 w-7 text-primary" />
               </div>
-            </motion.div>
+
+              <h3 className="font-display text-xl font-semibold transition-colors group-hover:text-primary">
+                {skill.title}
+              </h3>
+              <p className="mt-3 leading-relaxed text-muted-foreground">{skill.description}</p>
+
+              <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-500 group-hover:w-full" />
+            </div>
           ))}
         </div>
       </div>

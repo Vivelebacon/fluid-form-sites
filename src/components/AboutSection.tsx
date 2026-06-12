@@ -1,16 +1,13 @@
-import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Monitor, Palette, Smartphone, Zap, Settings } from "lucide-react";
 import { useLanguage } from "@/i18n";
+import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import SectionHeading from "@/components/SectionHeading";
 import hugoProfile from "@/assets/hugo-profile.jpg";
 
 const AboutSection = () => {
-  const ref = useRef(null);
   const { language } = useLanguage();
-  const isInView = useInView(ref, {
-    once: true,
-    margin: "-100px",
-  });
+  const sectionRef = useRef<HTMLElement>(null);
 
   const services =
     language === "fr"
@@ -69,77 +66,113 @@ const AboutSection = () => {
           },
         ];
 
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+
+      // Parallax drift inside the portrait frame
+      gsap.fromTo(
+        ".about-photo img",
+        { yPercent: -8 },
+        {
+          yPercent: 8,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".about-photo",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+
+      gsap.from(".about-photo-frame", {
+        clipPath: "inset(12% 12% 12% 12% round 24px)",
+        autoAlpha: 0,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".about-photo", start: "top 78%", once: true },
+      });
+
+      gsap.from(".about-copy", {
+        autoAlpha: 0,
+        y: 36,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".about-copy", start: "top 84%", once: true },
+      });
+
+      gsap.from(".service-row", {
+        autoAlpha: 0,
+        x: -32,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".service-list", start: "top 82%", once: true },
+      });
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section id="about" className="py-32 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 blur-3xl rounded-full" />
+    <section id="about" ref={sectionRef} className="relative overflow-hidden py-28 md:py-36">
+      <div className="pointer-events-none absolute -top-20 left-1/2 h-[400px] w-[800px] -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
+      <span className="text-ghost pointer-events-none absolute -right-4 top-12 hidden select-none font-display text-[12rem] font-black leading-none lg:block">
+        01
+      </span>
 
-      <div ref={ref} className="section-container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, x: 0, scale: 1 } : {}}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative flex justify-center lg:justify-start"
-          >
-            <div className="relative w-72 md:w-80 lg:w-96">
-              <motion.div
-                className="absolute -inset-4 bg-gradient-to-br from-primary/30 via-primary/10 to-transparent rounded-3xl blur-xl"
-                animate={{ opacity: [0.5, 0.8, 0.5], scale: [1, 1.02, 1] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      <div className="section-container relative z-10">
+        <div className="grid items-center gap-16 lg:grid-cols-12">
+          <div className="about-photo relative flex justify-center lg:col-span-5 lg:justify-start">
+            <div className="about-photo-frame profile-container aspect-[4/5] w-72 md:w-80 lg:w-full lg:max-w-md">
+              <img
+                src={hugoProfile}
+                alt={language === "fr" ? "Hugo Megardon - Web Designer Freelance" : "Hugo Megardon - Freelance Web Designer"}
+                className="h-full w-full scale-110 object-cover object-center"
               />
-
-              <div className="profile-container aspect-square">
-                <img
-                  src={hugoProfile}
-                  alt={language === "fr" ? "Hugo Megardon - Web Designer Freelance" : "Hugo Megardon - Freelance Web Designer"}
-                  className="w-full h-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 rounded-full border border-white/10 bg-background/60 px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-foreground backdrop-blur-md">
+                Hugo Megardon
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          >
-            <div className="mb-6 flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-6 text-center lg:text-left">
-              <span className="text-primary font-medium text-sm tracking-wide uppercase shrink-0">
-                {language === "fr" ? "À PROPOS" : "ABOUT"}
-              </span>
-              <h2 className={`text-4xl md:text-5xl font-bold animated-underline ${isInView ? "in-view" : ""}`}>
-                {language === "fr" ? "Ce Que Je Fais" : "What I Do"}
-              </h2>
-            </div>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+          <div className="lg:col-span-7">
+            <SectionHeading
+              index="01"
+              label={language === "fr" ? "À PROPOS" : "ABOUT"}
+              title={language === "fr" ? "Ce Que Je Fais" : "What I Do"}
+            />
+
+            <p className="about-copy mt-8 text-lg leading-relaxed text-muted-foreground">
               {language === "fr"
                 ? "Je crée des expériences digitales qui combinent exigence esthétique et efficacité stratégique. Chaque projet est traité avec précision et une vraie compréhension de ce qui rend un site performant."
                 : "I specialize in creating digital experiences that combine aesthetic excellence with strategic functionality. Every project is approached with precision and a deep understanding of what makes websites truly effective."}
             </p>
 
-            <div className="space-y-4">
+            <div className="service-list mt-10">
               {services.map((service, index) => (
-                <motion.div
+                <div
                   key={service.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
-                  className="group flex items-start gap-4 p-4 rounded-xl hover:bg-muted/50 transition-colors duration-300 hover-bounce"
+                  data-cursor-hover
+                  className="service-row group flex items-start gap-5 border-b border-white/5 py-5 transition-all duration-300 first:border-t hover:translate-x-2 hover:border-primary/30"
                 >
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <service.icon className="w-6 h-6 text-primary" />
+                  <span className="mt-1 w-8 shrink-0 font-display text-sm font-semibold text-primary/60">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20">
+                    <service.icon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="font-semibold text-foreground transition-colors group-hover:text-primary">
                       {service.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground mt-1">{service.description}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{service.description}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

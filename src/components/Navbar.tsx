@@ -1,37 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n";
 import { useNavigate } from "react-router-dom";
+import { scrollToId, scrollToTop } from "@/hooks/useSmoothScroll";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
   const { language } = useLanguage();
   const navigate = useNavigate();
 
   const navLinks = [
-    { label: language === "fr" ? "À propos" : "About", href: "#about" },
-    { label: language === "fr" ? "Compétences" : "Skills", href: "#skills" },
-    { label: language === "fr" ? "Projets" : "Work", href: "#portfolio" },
-    { label: language === "fr" ? "Processus" : "Process", href: "#process" },
+    { label: language === "fr" ? "À propos" : "About", id: "about" },
+    { label: language === "fr" ? "Compétences" : "Skills", id: "skills" },
+    { label: language === "fr" ? "Projets" : "Work", id: "portfolio" },
+    { label: language === "fr" ? "Processus" : "Process", id: "process" },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const y = window.scrollY;
+      setIsScrolled(y > 50);
+      // Hide when scrolling down past the hero, reveal on scroll up
+      setIsHidden(y > 600 && y > lastScrollY.current);
+      lastScrollY.current = y;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: "smooth" });
+  const handleNavClick = (id: string) => {
     setIsMobileMenuOpen(false);
+    scrollToId(id);
   };
 
   const goToContact = () => {
@@ -43,10 +49,10 @@ const Navbar = () => {
     <>
       <motion.header
         initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "py-4 bg-background/80 backdrop-blur-lg border-b border-border/50" : "py-6 bg-transparent"
+        animate={{ y: isHidden && !isMobileMenuOpen ? -110 : 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+          isScrolled ? "border-b border-white/5 bg-background/75 py-4 backdrop-blur-xl" : "bg-transparent py-6"
         }`}
       >
         <div className="section-container">
@@ -55,20 +61,20 @@ const Navbar = () => {
               href="#"
               onClick={(event) => {
                 event.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                scrollToTop();
               }}
-              className="text-xl font-bold hover:text-primary transition-colors"
+              className="font-display text-xl font-extrabold tracking-tight transition-colors hover:text-primary"
             >
               Hugo<span className="text-primary">.</span>
             </a>
 
-            <div className="hidden md:flex items-center justify-self-center">
+            <div className="hidden items-center justify-self-center md:flex">
               <div className="flex items-center gap-10 lg:gap-12">
                 {navLinks.map((link) => (
                   <button
                     key={link.label}
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors link-underline"
+                    onClick={() => handleNavClick(link.id)}
+                    className="link-underline text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {link.label}
                   </button>
@@ -77,18 +83,22 @@ const Navbar = () => {
               </div>
             </div>
 
-            <div className="hidden md:flex justify-self-end">
-              <Button onClick={goToContact} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6">
+            <div className="hidden justify-self-end md:flex">
+              <Button
+                onClick={goToContact}
+                className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90"
+              >
                 Contact
               </Button>
             </div>
 
             <button
-              className="md:hidden p-2 justify-self-end"
+              className="justify-self-end p-2 md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={language === "fr" ? "Ouvrir le menu" : "Toggle menu"}
+              aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </nav>
         </div>
@@ -101,23 +111,29 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-[72px] z-40 md:hidden bg-background/95 backdrop-blur-lg border-b border-border"
+            className="fixed inset-x-0 top-[72px] z-40 border-b border-border bg-background/95 backdrop-blur-xl md:hidden"
           >
             <div className="section-container py-6">
               <div className="flex flex-col gap-4">
                 <div className="pb-2">
                   <LanguageSwitcher />
                 </div>
-                {navLinks.map((link) => (
+                {navLinks.map((link, index) => (
                   <button
                     key={link.label}
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors text-left py-2"
+                    onClick={() => handleNavClick(link.id)}
+                    className="flex items-baseline gap-3 py-2 text-left text-lg font-medium text-muted-foreground transition-colors hover:text-foreground"
                   >
+                    <span className="font-display text-xs font-semibold text-primary/60">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     {link.label}
                   </button>
                 ))}
-                <Button onClick={goToContact} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full mt-2">
+                <Button
+                  onClick={goToContact}
+                  className="mt-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+                >
                   Contact
                 </Button>
               </div>
