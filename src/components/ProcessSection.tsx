@@ -100,15 +100,16 @@ const ProcessSection = () => {
         });
       });
 
-      // Mobile / reduced motion: simple staggered reveal
+      // Mobile / reduced motion: per-panel reveal, no lingering half-faded panels
       mm.add("(max-width: 1023px) and (prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".process-panel", {
-          autoAlpha: 0,
-          y: 44,
-          duration: 0.7,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: { trigger: trackRef.current, start: "top 82%", once: true },
+        gsap.utils.toArray<HTMLElement>(".process-panel").forEach((panel) => {
+          gsap.from(panel, {
+            autoAlpha: 0,
+            y: 40,
+            duration: 0.55,
+            ease: "power3.out",
+            scrollTrigger: { trigger: panel, start: "top 92%", once: true },
+          });
         });
       });
 

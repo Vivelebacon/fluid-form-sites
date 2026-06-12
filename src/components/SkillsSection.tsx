@@ -78,13 +78,15 @@ const SkillsSection = () => {
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
-      gsap.from(".skill-item", {
-        autoAlpha: 0,
-        y: 48,
-        duration: 0.8,
-        stagger: 0.09,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".skill-grid", start: "top 80%", once: true },
+      // Per-card triggers: every card reaches full luminosity as it enters the viewport
+      gsap.utils.toArray<HTMLElement>(".skill-item").forEach((card) => {
+        gsap.from(card, {
+          autoAlpha: 0,
+          y: 40,
+          duration: 0.55,
+          ease: "power3.out",
+          scrollTrigger: { trigger: card, start: "top 92%", once: true },
+        });
       });
     },
     { scope: sectionRef }

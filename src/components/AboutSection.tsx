@@ -102,13 +102,15 @@ const AboutSection = () => {
         scrollTrigger: { trigger: ".about-copy", start: "top 84%", once: true },
       });
 
-      gsap.from(".service-row", {
-        autoAlpha: 0,
-        x: -32,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".service-list", start: "top 82%", once: true },
+      // Per-row triggers: each row is fully lit by the time it is in view
+      gsap.utils.toArray<HTMLElement>(".service-row").forEach((row) => {
+        gsap.from(row, {
+          autoAlpha: 0,
+          x: -32,
+          duration: 0.55,
+          ease: "power3.out",
+          scrollTrigger: { trigger: row, start: "top 92%", once: true },
+        });
       });
     },
     { scope: sectionRef }
