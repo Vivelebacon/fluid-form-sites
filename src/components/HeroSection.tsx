@@ -31,8 +31,9 @@ const HeroSection = ({ ready }: HeroSectionProps) => {
         return;
       }
 
+      // "words" keeps chars grouped so a word can never break mid-letter on wrap
       const split = new SplitText(headline, {
-        type: "lines,chars",
+        type: "lines,words,chars",
         linesClass: "split-line-mask",
       });
 
@@ -100,7 +101,7 @@ const HeroSection = ({ ready }: HeroSectionProps) => {
         <h1
           ref={headlineRef}
           data-split
-          className="mt-8 font-display text-[clamp(2.8rem,9vw,7.5rem)] font-black uppercase leading-[0.96] tracking-tight"
+          className="mt-8 font-display text-[clamp(2.5rem,7.5vw,6.5rem)] font-black uppercase leading-[0.96] tracking-tight"
         >
           {language === "fr" ? "Sites Web Modernes" : "Modern Websites"}
           <br />
