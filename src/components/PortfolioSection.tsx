@@ -92,9 +92,9 @@ const PortfolioSection = () => {
           {
             title: "CBLIS",
             description:
-              "Plateforme professionnelle pour la gestion des informations de laboratoire et des échantillons. Conçue pour les professionnels de la santé avec une intégration fluide des flux de travail.",
+              "Agence spécialisée dans l'intégration de services de traduction pour les entreprises. Conçue pour des clients en quête de flux de travail multilingues fluides et d'une expertise de haut niveau.",
             link: "https://www.cblis.com/",
-            tags: ["Web Design", "Santé", "Enterprise"],
+            tags: ["Web Design", "Traduction", "Enterprise"],
             logo: cblisLogo,
             heroVideo: "/hero-cblis.mp4",
           },
@@ -150,9 +150,9 @@ const PortfolioSection = () => {
           {
             title: "CBLIS",
             description:
-              "Professional platform for laboratory information and sample management. Designed with healthcare professionals in mind for seamless workflow integration.",
+              "Translation integration services platform for enterprise clients. Built to streamline multilingual workflows and connect businesses across language barriers with precision.",
             link: "https://www.cblis.com/",
-            tags: ["Web Design", "Healthcare", "Enterprise"],
+            tags: ["Web Design", "Translation", "Enterprise"],
             logo: cblisLogo,
             heroVideo: "/hero-cblis.mp4",
           },
@@ -257,7 +257,13 @@ const PortfolioSection = () => {
               className="project-card sticky"
               style={{ top: `calc(88px + ${index * 16}px)` }}
             >
-              <article className="project-card-inner relative h-[72vh] min-h-[520px] origin-top overflow-hidden rounded-3xl border border-white/10 bg-card shadow-2xl">
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor-hover
+                className="project-card-inner group block relative h-[72vh] min-h-[520px] origin-top overflow-hidden rounded-3xl border border-white/10 bg-card shadow-2xl"
+              >
                 <ProjectMedia project={project} />
 
                 {/* Legibility gradient over the media */}
@@ -321,21 +327,15 @@ const PortfolioSection = () => {
                       ))}
                     </div>
 
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-cursor-hover
-                      className="group/link mt-8 inline-flex items-center gap-3 rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(181_90%_52%/0.4)]"
-                    >
+                    <span className="pointer-events-none mt-8 inline-flex items-center gap-3 rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground transition-all duration-300 group-hover:bg-primary/90 group-hover:shadow-[0_0_30px_hsl(181_90%_52%/0.4)]">
                       {language === "fr" ? "Voir le site" : "View website"}
-                      <ArrowUpRight className="h-5 w-5 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1" />
-                    </a>
+                      <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                    </span>
                   </div>
                 </div>
 
                 <div className="project-card-dim pointer-events-none absolute inset-0 z-20 bg-background opacity-0" />
-              </article>
+              </a>
             </div>
           ))}
         </div>
