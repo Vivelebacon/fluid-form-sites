@@ -18,6 +18,7 @@ type Project = {
   featured?: boolean;
   logo?: string;
   logoWhiteBg?: boolean;
+  logoLarge?: boolean;
   heroVideo?: string;
   heroImage?: string;
 };
@@ -105,6 +106,7 @@ const PortfolioSection = () => {
             link: "https://www.yourbaligetaway.com/",
             tags: ["Web Design", "Tourisme", "E-commerce"],
             logo: ybgLogo,
+            logoLarge: true,
             heroVideo: "/hero-ybg.mp4",
           },
           {
@@ -123,7 +125,6 @@ const PortfolioSection = () => {
             link: "https://www.crossbordertranslation.com/",
             tags: ["Web Design", "Corporate", "Traduction"],
             logo: cbtLogo,
-            logoWhiteBg: true,
             heroImage: "/hero-cbt.png",
           },
           {
@@ -133,7 +134,6 @@ const PortfolioSection = () => {
             link: "https://www.humainconnection.com/",
             tags: ["Co-fondateur", "AI SaaS", "Multilingue"],
             logo: humainLogo,
-            logoWhiteBg: true,
             heroImage: "/hero-humain.jpg",
           },
         ]
@@ -164,6 +164,7 @@ const PortfolioSection = () => {
             link: "https://www.yourbaligetaway.com/",
             tags: ["Web Design", "Travel", "E-commerce"],
             logo: ybgLogo,
+            logoLarge: true,
             heroVideo: "/hero-ybg.mp4",
           },
           {
@@ -182,7 +183,6 @@ const PortfolioSection = () => {
             link: "https://www.crossbordertranslation.com/",
             tags: ["Web Design", "Corporate", "Translation"],
             logo: cbtLogo,
-            logoWhiteBg: true,
             heroImage: "/hero-cbt.png",
           },
           {
@@ -192,7 +192,6 @@ const PortfolioSection = () => {
             link: "https://www.humainconnection.com/",
             tags: ["Co-Founder", "AI SaaS", "Multilingual"],
             logo: humainLogo,
-            logoWhiteBg: true,
             heroImage: "/hero-humain.jpg",
           },
         ];
@@ -284,7 +283,11 @@ const PortfolioSection = () => {
                         <img
                           src={project.logo}
                           alt={`${project.title} logo`}
-                          className="h-12 w-auto max-w-[180px] rounded-lg object-contain md:h-14"
+                          className={
+                            project.logoLarge
+                              ? "h-20 w-auto max-w-[260px] rounded-lg object-contain md:h-24"
+                              : "h-12 w-auto max-w-[180px] rounded-lg object-contain md:h-14"
+                          }
                           style={
                             project.logoWhiteBg
                               ? { background: "rgba(255,255,255,0.92)", padding: "6px 12px", borderRadius: 10 }
