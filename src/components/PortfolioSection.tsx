@@ -3,12 +3,11 @@ import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/i18n";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import SectionHeading from "@/components/SectionHeading";
-import megaAiLogo from "@/assets/mega-ai-logo.svg";
-import helionovaLogo from "@/assets/helionova-logo.png";
+import megaAiLogo from "@/assets/mega-ai-logo-real.png";
 import cblisLogo from "@/assets/cblis-logo.png";
-import ybgLogo from "@/assets/ybg-logo.jpeg";
+import ybgLogo from "@/assets/ybg-logo-transparent.png";
 import in2dutchLogo from "@/assets/in2dutch-logo.svg";
-import cbtLogo from "@/assets/cbt-logo.jpg";
+import cbtLogo from "@/assets/cbt-logo-real.png";
 import humainLogo from "@/assets/humain-logo.png";
 
 type Project = {
@@ -109,15 +108,6 @@ const PortfolioSection = () => {
             heroVideo: "/hero-ybg.mp4",
           },
           {
-            title: "HelioNova Energie",
-            description:
-              "Template pour entreprises solaires, pensé pour rassurer, convertir et valoriser une offre énergie propre.",
-            link: "https://helionovaenergie.vercel.app/",
-            tags: ["Template", "Solaire", "Landing page"],
-            logo: helionovaLogo,
-            heroVideo: "/hero-helionova.mp4",
-          },
-          {
             title: "In2Dutch",
             description:
               "Site vitrine pour une agence de traduction néerlandaise. Design épuré, orienté conversion, avec une identité visuelle forte et moderne.",
@@ -144,7 +134,7 @@ const PortfolioSection = () => {
             tags: ["Co-fondateur", "AI SaaS", "Multilingue"],
             logo: humainLogo,
             logoWhiteBg: true,
-            heroVideo: "/hero-humain.mp4",
+            heroImage: "/hero-humain.jpg",
           },
         ]
       : [
@@ -177,15 +167,6 @@ const PortfolioSection = () => {
             heroVideo: "/hero-ybg.mp4",
           },
           {
-            title: "HelioNova Energie",
-            description:
-              "Template website for solar companies focused on trust, lead generation, and a clean energy visual identity.",
-            link: "https://helionovaenergie.vercel.app/",
-            tags: ["Template", "Solar", "Landing Page"],
-            logo: helionovaLogo,
-            heroVideo: "/hero-helionova.mp4",
-          },
-          {
             title: "In2Dutch",
             description:
               "Showcase website for a Dutch translation agency. Clean, conversion-focused design with a strong and modern visual identity.",
@@ -212,7 +193,7 @@ const PortfolioSection = () => {
             tags: ["Co-Founder", "AI SaaS", "Multilingual"],
             logo: humainLogo,
             logoWhiteBg: true,
-            heroVideo: "/hero-humain.mp4",
+            heroImage: "/hero-humain.jpg",
           },
         ];
 
