@@ -9,6 +9,7 @@ import cblisLogo from "@/assets/cblis-logo.png";
 import ybgLogo from "@/assets/ybg-logo.jpeg";
 import in2dutchLogo from "@/assets/in2dutch-logo.svg";
 import cbtLogo from "@/assets/cbt-logo.jpg";
+import humainLogo from "@/assets/humain-logo.png";
 
 type Project = {
   title: string;
@@ -135,6 +136,16 @@ const PortfolioSection = () => {
             logoWhiteBg: true,
             heroImage: "/hero-cbt.png",
           },
+          {
+            title: "HumAIn Connection",
+            description:
+              "Plateforme IA + humain pour entreprises multilingues : assistant IA, localisation vidéo et sprint d'adoption IA. Conçue et développée en tant que co-fondateur.",
+            link: "https://www.humainconnection.com/",
+            tags: ["Co-fondateur", "AI SaaS", "Multilingue"],
+            logo: humainLogo,
+            logoWhiteBg: true,
+            heroVideo: "/hero-humain.mp4",
+          },
         ]
       : [
           {
@@ -192,6 +203,16 @@ const PortfolioSection = () => {
             logo: cbtLogo,
             logoWhiteBg: true,
             heroImage: "/hero-cbt.png",
+          },
+          {
+            title: "HumAIn Connection",
+            description:
+              "AI + human venture for multilingual businesses: an AI assistant, AI video localization, and an AI adoption sprint. Designed and built as co-founder.",
+            link: "https://www.humainconnection.com/",
+            tags: ["Co-Founder", "AI SaaS", "Multilingual"],
+            logo: humainLogo,
+            logoWhiteBg: true,
+            heroVideo: "/hero-humain.mp4",
           },
         ];
 
