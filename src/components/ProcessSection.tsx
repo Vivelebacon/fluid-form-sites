@@ -123,7 +123,7 @@ const ProcessSection = () => {
       <div className="flex flex-col py-28 md:py-36 lg:h-screen lg:justify-center lg:py-0">
         <div className="section-container w-full">
           <SectionHeading
-            index="04"
+            index="05"
             label="WORKFLOW"
             title={language === "fr" ? "Mon Processus" : "My Process"}
             description={

@@ -19,6 +19,7 @@ const Navbar = () => {
     { label: language === "fr" ? "À propos" : "About", id: "about" },
     { label: language === "fr" ? "Compétences" : "Skills", id: "skills" },
     { label: language === "fr" ? "Projets" : "Work", id: "portfolio" },
+    { label: language === "fr" ? "Avis" : "Reviews", id: "testimonials" },
     { label: language === "fr" ? "Processus" : "Process", id: "process" },
   ];
 
